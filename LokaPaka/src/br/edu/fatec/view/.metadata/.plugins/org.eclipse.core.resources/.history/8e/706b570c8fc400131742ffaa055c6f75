@@ -1,0 +1,51 @@
+import java.util.HashMap;
+
+/**
+ * The responder class represents a response generator object. It is
+ * used to generate an automatic response.
+ * 
+ * @author     Michael Kolling and David J. Barnes
+ * @version    0.1  (1.Feb.2002)
+ */
+public class Responder
+{
+    /**
+     * Construct a Responder - nothing to do
+     */
+    public Responder()
+    {
+    	
+    }
+    
+    private HashMap<String, String> baseConhecimento;
+    private void criaBaseConhecimento(){
+    	baseConhecimento = new HashMap<String, String>();
+    	baseConhecimento.put("lento", "troque para nova versão");
+    	baseConhecimento.put("sistema", "nosso eng. estão verificando. aguarde");
+    	baseConhecimento.put("treinamento", "ligar para nossa central de vendas");
+    	
+    }
+
+    /**
+     * Generate a response.
+     * @return   A string that should be displayed as the response
+     */
+    public String generateResponse()
+    {
+        return "Não entendi. Reescreva com outras palavras...";
+    }
+    
+    public String  generateResponse(String fraseUsuario)
+    {
+    	String[] palavras = fraseUsuario.split("\\s");
+    	for( String palavra :  palavras){
+    		String resposta = baseConhecimento.get(palavra);
+    		if ( resposta != null ){
+    			return resposta;
+    		}
+    	}
+    	
+    	return generateResponse();
+    }
+    
+}

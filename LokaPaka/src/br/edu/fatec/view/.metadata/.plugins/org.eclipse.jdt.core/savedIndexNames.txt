@@ -1,0 +1,6 @@
+INDEX VERSION 1.126+C:\wsluquini\.metadata\.plugins\org.eclipse.jdt.core
+2977788235.index
+3824557632.index
+154712920.index
+3302466528.index
+1538890612.index

@@ -1,0 +1,17 @@
+import java.util.Comparator;
+
+
+public class CriterioIdentidade implements Comparator<Pessoa> {
+
+	public int compare(Pessoa o1, Pessoa o2) {
+		System.out.println(o1.getCpf() + " " + o1.getNome()  );
+		System.out.println(o2.getCpf() + " " + o2.getNome()  );
+		
+		if (o1.getNome().equals(o2.getNome() )){
+			return 0;
+		}
+		
+		return -1;
+	}
+
+}

@@ -1,0 +1,11 @@
+import java.util.Comparator;
+
+
+public class CriterioIdentidade implements Comparator<Pessoa> {
+
+	public int compare(Pessoa o1, Pessoa o2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

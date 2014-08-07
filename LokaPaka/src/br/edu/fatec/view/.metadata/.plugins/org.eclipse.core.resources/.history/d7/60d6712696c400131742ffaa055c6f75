@@ -1,0 +1,17 @@
+
+public class AppProcessamentoImagem {
+
+	public void start(){
+		//ler imagem do usuario
+		//perguntar qual filtro
+		//executar Filtro
+		
+	}
+	
+	public void aplicarFiltro(Object imagem, Filtro filtro){
+		if( filtro.imagemAdequada(imagem)){
+			filtro.executarFiltro(imagem);
+		}
+	}
+
+}

@@ -1,0 +1,25 @@
+import java.util.HashSet;
+
+
+public class Exemplo {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		HashSet<Pessoa> set = new HashSet<Pessoa>();
+		Pessoa a = new Pessoa();
+		a.setNome("maria");
+		Pessoa b = new Pessoa();
+		b.setNome("JOSE");
+		Pessoa c = new Pessoa();
+		b.setNome("maria");
+		set.add( a );
+		set.add( c );
+		set.add( b);
+		System.out.println(set.size());
+		
+	}
+
+}

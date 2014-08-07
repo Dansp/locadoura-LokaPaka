@@ -1,0 +1,9 @@
+package br.fatec.bluej;
+
+public class MainApp {
+
+	public static void main(String args[]){
+		BallDemo demo = new BallDemo();
+		demo.drawDemo();
+	}
+}

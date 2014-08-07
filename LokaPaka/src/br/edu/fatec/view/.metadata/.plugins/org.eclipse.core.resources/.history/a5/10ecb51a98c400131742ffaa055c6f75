@@ -1,0 +1,33 @@
+import java.util.HashSet;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+
+public class Exemplo {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		//HashSet<Pessoa> set = new HashSet<Pessoa>();
+		CriterioIdentidade criterioFiltro = new  CriterioIdentidade();
+		TreeSet<Pessoa> set = new TreeSet<Pessoa>(criterioFiltro);
+				
+		Pessoa a = new Pessoa();
+		a.setNome("maria");
+		Pessoa b = new Pessoa();
+		b.setNome("JOSE");
+		Pessoa c = new Pessoa();
+		b.setNome("maria");
+		
+		set.add( a );
+		set.add( c );
+		set.add( b);
+		
+		System.out.println(set.size());
+		
+	}
+
+}
