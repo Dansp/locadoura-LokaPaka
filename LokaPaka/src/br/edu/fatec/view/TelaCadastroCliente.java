@@ -246,23 +246,12 @@ public class TelaCadastroCliente extends JFrame {
 
 					dao.salvar(cliente);
 					txtCarterinha.setText(cliente.getNumCarterinha());
-					JOptionPane.showMessageDialog(null, "Gravado com sucesso");
+					System.out.println(cliente.getNumCarterinha());
+					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
 
-					// limpa os campos
-					for (int i = 0; i < getContentPane().getComponentCount(); i++) {
-						// varre todos os componentes
-
-						Component c = getContentPane().getComponent(i);
-
-						if (c instanceof JTextField) {
-							// apaga os valores
-							JTextField field = (JTextField) c;
-							field.setText("");
-						}
-					}
-
+				
 				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Sistema indisponível");
+					JOptionPane.showMessageDialog(null, "Não é possível fazer o cadastro, tente novamente");
 
 				}
 

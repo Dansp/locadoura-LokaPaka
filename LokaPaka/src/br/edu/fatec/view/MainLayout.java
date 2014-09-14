@@ -98,7 +98,7 @@ public class MainLayout extends JFrame {
 		mntmFilme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new TelaCadastroFilme().setVisible(true);
-				dispose();
+				
 			}
 		});
 		mnCadastro.add(mntmFilme);
@@ -107,13 +107,11 @@ public class MainLayout extends JFrame {
 		mnNewMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-								
+					dispose();
+					new TelaConsulta().setVisible(true);			
 			}
 		});
 		menuBar.add(mnNewMenu);
-		
-		JMenu mnNewMenu_1 = new JMenu("Monitoramento");
-		menuBar.add(mnNewMenu_1);
 		
 		JMenu mnNewMenu_2 = new JMenu("Relat\u00F3rio");
 		menuBar.add(mnNewMenu_2);

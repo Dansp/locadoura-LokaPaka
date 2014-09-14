@@ -101,6 +101,7 @@ public class TelaLogin extends JFrame {
 		panel.add(lblBemVindoAo);
 		
 		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.setIcon(new ImageIcon(TelaLogin.class.getResource("/br/edu/fatec/icons/accept.png")));
 		
 		
 		btnEntrar.addActionListener(new ActionListener() {
@@ -145,6 +146,7 @@ public class TelaLogin extends JFrame {
 		contentPane.add(btnEntrar);
 		
 		JButton btnSair = new JButton("Sair");
+		btnSair.setIcon(new ImageIcon(TelaLogin.class.getResource("/br/edu/fatec/icons/door_out.png")));
 		
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

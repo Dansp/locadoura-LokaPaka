@@ -1,28 +1,33 @@
 package br.edu.fatec.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import br.edu.fatec.bean.Filme;
+import br.edu.fatec.dao.FilmeDAO;
 
 public class TelaCadastroFilme extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtAno;
-	private JTextField txtNomeFilme;
+	private JTextField txtTitulo;
 	private JTextField txtDiretor;
-	private JTextField textField;
+	private JTextField txtGeradoAutomticamente;
 
 	/**
 	 * Launch the application.
@@ -60,7 +65,7 @@ public class TelaCadastroFilme extends JFrame {
 		lblCadastroDeFilme.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel.add(lblCadastroDeFilme);
 		
-		JLabel lblNome = new JLabel("Nome:");
+		JLabel lblNome = new JLabel("T\u00EDtulo:");
 		lblNome.setBounds(35, 100, 46, 14);
 		contentPane.add(lblNome);
 		
@@ -72,10 +77,10 @@ public class TelaCadastroFilme extends JFrame {
 		lblAno.setBounds(35, 156, 46, 14);
 		contentPane.add(lblAno);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"A\u00E7\u00E3o", "Anima\u00E7\u00E3o", "Aventura", "Chanchada", "Cinema cat\u00E1strofe", "Com\u00E9dia", "Com\u00E9dia rom\u00E2ntica", "Com\u00E9dia dram\u00E1tica", "Com\u00E9dia de a\u00E7\u00E3o", "Cult", "Dan\u00E7a", "Document\u00E1rios ", "Drama", "Espionagem", "Er\u00F3tico", "Fantasia", "Faroeste ", "Fic\u00E7\u00E3o cient\u00EDfica", "Franchise/S\u00E9ries", "Guerra", "Machinima", "Masala", "Musical", "Filme noir", "Policial", "Pornochanchada", "Pornogr\u00E1fico", "Romance", "Suspense", "Terror ", "Trash"}));
-		comboBox.setBounds(264, 153, 138, 20);
-		contentPane.add(comboBox);
+		final JComboBox comboBoxGenero = new JComboBox();
+		comboBoxGenero.setModel(new DefaultComboBoxModel(new String[] {"A\u00E7\u00E3o", "Anima\u00E7\u00E3o", "Aventura", "Com\u00E9dia", "Com\u00E9dia rom\u00E2ntica", "Com\u00E9dia dram\u00E1tica", "Com\u00E9dia de a\u00E7\u00E3o", "Dan\u00E7a", "Document\u00E1rios ", "Drama", "Espionagem", "Fantasia", "Faroeste ", "Fic\u00E7\u00E3o cient\u00EDfica", "Franchise/S\u00E9ries", "Guerra", "Musical", "Filme noir", "Policial", "Pornogr\u00E1fico", "Romance", "Suspense", "Terror "}));
+		comboBoxGenero.setBounds(264, 153, 138, 20);
+		contentPane.add(comboBoxGenero);
 		
 		JLabel lblGenero = new JLabel("G\u00EAnero:");
 		lblGenero.setBounds(195, 156, 46, 14);
@@ -86,41 +91,74 @@ public class TelaCadastroFilme extends JFrame {
 		contentPane.add(txtAno);
 		txtAno.setColumns(10);
 		
-		txtNomeFilme = new JTextField();
-		txtNomeFilme.setBounds(84, 97, 318, 20);
-		contentPane.add(txtNomeFilme);
-		txtNomeFilme.setColumns(10);
+		txtTitulo = new JTextField();
+		txtTitulo.setBounds(84, 97, 318, 20);
+		contentPane.add(txtTitulo);
+		txtTitulo.setColumns(10);
 		
 		txtDiretor = new JTextField();
 		txtDiretor.setBounds(84, 122, 318, 20);
 		contentPane.add(txtDiretor);
 		txtDiretor.setColumns(10);
+
+		final JLabel label = new JLabel("");
+		label.setBounds(84, 237, 318, 14);
+		contentPane.add(label);
 		
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setBounds(313, 203, 89, 23);
+		btnSalvar.setIcon(new ImageIcon(TelaCadastroFilme.class.getResource("/br/edu/fatec/icons/add.png")));
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					Filme filme = new Filme();
+					
+					filme.setTitulo(txtTitulo.getText());
+					filme.setDiretor(txtDiretor.getText());
+					filme.setAno(txtAno.getText());
+					filme.setGenero(comboBoxGenero.getSelectedItem().toString());
+					
+					FilmeDAO dao = new FilmeDAO();
+					dao.salvar(filme);
+					txtGeradoAutomticamente.setText(filme.getCodCliente());
+					System.out.println(filme.getCodCliente());
+					label.setText("Gravado com sucesso!!!");
+					
+					
+									
+				}catch(Exception e){
+					label.setText("Erro ao gravar Dados, tente novamente");
+				}
+			}
+		});
+		btnSalvar.setBounds(292, 203, 110, 23);
 		contentPane.add(btnSalvar);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setIcon(new ImageIcon(TelaCadastroFilme.class.getResource("/br/edu/fatec/icons/arrow_left.png")));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new MainLayout().setVisible(true);
+				
 				dispose();
+				new MainLayout().setVisible(true);
 			}
 		});
 		btnVoltar.setBounds(81, 203, 89, 23);
 		contentPane.add(btnVoltar);
 		
 		JLabel lblCdigoDoFilme = new JLabel("C\u00F3digo do Filme:");
-		lblCdigoDoFilme.setBounds(35, 61, 97, 14);
+		lblCdigoDoFilme.setBounds(35, 61, 117, 14);
 		contentPane.add(lblCdigoDoFilme);
 		
-		textField = new JTextField();
-		textField.setBounds(128, 58, 274, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtGeradoAutomticamente = new JTextField();
+		txtGeradoAutomticamente.setText("Gerado autom\u00E1ticamente");
+		txtGeradoAutomticamente.setEditable(false);
+		txtGeradoAutomticamente.setBounds(141, 58, 156, 20);
+		contentPane.add(txtGeradoAutomticamente);
+		txtGeradoAutomticamente.setColumns(10);
 		
 		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(208, 203, 89, 23);
+		btnAlterar.setBounds(195, 203, 89, 23);
 		contentPane.add(btnAlterar);
+		
 	}
 }

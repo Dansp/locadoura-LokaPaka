@@ -24,6 +24,7 @@ import br.edu.fatec.util.Cryptography;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 
 public class TelaCadastroFuncionario extends JFrame {
 
@@ -87,6 +88,7 @@ public class TelaCadastroFuncionario extends JFrame {
 		txtEmail.setColumns(10);
 		
 		final JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setIcon(new ImageIcon(TelaCadastroFuncionario.class.getResource("/br/edu/fatec/icons/add.png")));
 		btnCadastrar.setToolTipText("clique aqui");
 
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -112,7 +114,7 @@ public class TelaCadastroFuncionario extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(148, 213, 117, 23);
+		btnCadastrar.setBounds(136, 213, 117, 23);
 		contentPane.add(btnCadastrar);
 		
 		passwordField01Func = new JPasswordField();
@@ -154,13 +156,14 @@ public class TelaCadastroFuncionario extends JFrame {
 		lblNovoCadastro.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setIcon(new ImageIcon(TelaCadastroFuncionario.class.getResource("/br/edu/fatec/icons/arrow_left.png")));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				new TelaLogin().setVisible(true);
 			}
 		});
-		btnVoltar.setBounds(8, 213, 89, 23);
+		btnVoltar.setBounds(21, 213, 89, 23);
 		contentPane.add(btnVoltar);
 	}
 
