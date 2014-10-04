@@ -27,6 +27,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JProgressBar;
+import java.awt.Component;
 
 public class MainLayout extends JFrame {
 
@@ -98,6 +99,7 @@ public class MainLayout extends JFrame {
 		mntmFilme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new TelaCadastroFilme().setVisible(true);
+				dispose();
 				
 			}
 		});
@@ -130,6 +132,7 @@ public class MainLayout extends JFrame {
 		});
 		menuBar.add(mnNewMenu_4);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -145,11 +148,12 @@ public class MainLayout extends JFrame {
 		lblWwwvideo.setBounds(546, 371, 133, 14);
 		contentPane.add(lblWwwvideo);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		Image img = new ImageIcon(this.getClass().getResource("/beautiful.jpg")).getImage();
-		lblNewLabel_1.setIcon(new ImageIcon(img));
-		lblNewLabel_1.setBounds(0, 0, 725, 412);
-		contentPane.add(lblNewLabel_1);
+		JLabel imagem_fundo_lakapaka = new JLabel("");
+		imagem_fundo_lakapaka.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Image img = new ImageIcon(this.getClass().getResource("/lokapaka_baixa.jpg")).getImage();
+		imagem_fundo_lakapaka.setIcon(new ImageIcon(img));
+		imagem_fundo_lakapaka.setBounds(165, -94, 754, 546);
+		contentPane.add(imagem_fundo_lakapaka);
 		
 		
 		
