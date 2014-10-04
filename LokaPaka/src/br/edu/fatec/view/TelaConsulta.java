@@ -1,38 +1,32 @@
 package br.edu.fatec.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.LayoutManager;
-import java.awt.ScrollPane;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
-
 import java.awt.Color;
-
-import javax.swing.JButton;
-
-import br.edu.fatec.bean.Filme;
-import br.edu.fatec.dao.FilmeDAO;
-import br.edu.fatec.util.ConsultaTableModel;
-import net.miginfocom.swing.MigLayout;
-
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JComboBox;
+
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import br.edu.fatec.bean.Cliente;
+import br.edu.fatec.bean.Filme;
+import br.edu.fatec.dao.ClienteDAO;
+import br.edu.fatec.dao.FilmeDAO;
+import br.edu.fatec.util.ConsultaTableModelCliente;
+import br.edu.fatec.util.ConsultaTableModelFilme;
 
 public class TelaConsulta extends JFrame {
 
@@ -40,7 +34,8 @@ public class TelaConsulta extends JFrame {
 	private JTextField textFieldPesquisa;
 	private JTable table;
 	private JScrollPane scrollpane;
-
+	private JComboBox comboBoxEscolhaPesquisa;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -62,7 +57,7 @@ public class TelaConsulta extends JFrame {
 	 */
 	public TelaConsulta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 678, 412);
+		setBounds(100, 100, 900, 509);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -79,7 +74,7 @@ public class TelaConsulta extends JFrame {
 		
 		panelTable = new JPanel();
 		panelTable.setBorder(BorderFactory.createTitledBorder("Lista de consulta"));
-		panelTable.setBounds(84, 95, 490, 244);
+		panelTable.setBounds(84, 95, 800, 365);
 		
 		table = new JTable();
 		table.setBackground(Color.WHITE);
@@ -89,8 +84,30 @@ public class TelaConsulta extends JFrame {
 		
 		JButton btnPequisar = new JButton("Pesquisar");
 		btnPequisar.addActionListener(new ActionListener() {
+			
+
 			public void actionPerformed(ActionEvent arg0) {
 				
+				if (comboBoxEscolhaPesquisa.getSelectedIndex() == 0){
+					
+					try {
+						List<Cliente> clientes = new ArrayList<Cliente>();
+						Cliente cliente = new Cliente();
+						cliente.setCpf(textFieldPesquisa.getText());
+						cliente.setNomeCliente(textFieldPesquisa.getText());
+						cliente.setNumCarterinha(textFieldPesquisa.getText());
+						ClienteDAO dao = new ClienteDAO();
+						
+						clientes = dao.consultar(cliente);
+						
+						table.setModel(new ConsultaTableModelCliente(clientes));
+						
+						JOptionPane.showMessageDialog(null, "Consulta com sucesso");
+						
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Consulta inválida. Digite novamente");
+					}
+				} else {
 				try {
 					List<Filme> filmes = new ArrayList<Filme>();
 					Filme filme = new Filme();
@@ -103,14 +120,14 @@ public class TelaConsulta extends JFrame {
 					// apresentar os dados
 					
 					
-					table.setModel(new ConsultaTableModel(filmes));
+					table.setModel(new ConsultaTableModelFilme(filmes));
 					
 
 					JOptionPane.showMessageDialog(null, "Consulta com sucesso");
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Consulta inválida. Digite novamente");
-
 				}
+			}
 			
 			}
 		});
@@ -118,10 +135,10 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(btnPequisar);
 		contentPane.add(panelTable);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Cliente", "Filme"}));
-		comboBox.setBounds(460, 66, 114, 20);
-		contentPane.add(comboBox);
+		comboBoxEscolhaPesquisa = new JComboBox();
+		comboBoxEscolhaPesquisa.setModel(new DefaultComboBoxModel(new String[] {"Cliente", "Filme"}));
+		comboBoxEscolhaPesquisa.setBounds(460, 66, 114, 20);
+		contentPane.add(comboBoxEscolhaPesquisa);
 		
 		JLabel lblPesquisarPor = new JLabel("Pesquisar por: ");
 		lblPesquisarPor.setBounds(348, 70, 102, 14);
@@ -129,7 +146,7 @@ public class TelaConsulta extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.CYAN);
-		panel.setBounds(0, 0, 662, 94);
+		panel.setBounds(0, 0, 884, 94);
 		contentPane.add(panel);
 		
 		JButton button = new JButton("");

@@ -265,7 +265,8 @@ public class TelaCadastroCliente extends JFrame {
 		btnConsultar.setBounds(392, 425, 117, 25);
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				/*
+				 * será retirado
 				try {
 					Cliente cliente = new Cliente();
 					cliente.setCpf(txtCPF.getText());
@@ -295,8 +296,9 @@ public class TelaCadastroCliente extends JFrame {
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Consulta inválida. Digite novamente");
 
-				}
+				}*/
 			}
+			
 
 		});
 		contentPane.add(btnConsultar);

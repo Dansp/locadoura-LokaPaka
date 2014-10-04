@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
 
-public class ConsultaTableModel extends AbstractTableModel{
+public class ConsultaTableModelFilme extends AbstractTableModel{
 	
 	private static final int COL_COD_CLIENTE = 0;
 	private static final int COL_TITULO = 1;
@@ -17,7 +18,7 @@ public class ConsultaTableModel extends AbstractTableModel{
 
 	private List<Filme> filmes;
 	
-	public ConsultaTableModel(List<Filme> filmes){
+	public ConsultaTableModelFilme(List<Filme> filmes){
 		this.filmes = filmes;
 	}
 	

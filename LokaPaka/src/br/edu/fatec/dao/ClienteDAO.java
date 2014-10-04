@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.util.ConnectionFactory;
@@ -59,42 +61,49 @@ public class ClienteDAO {
 
 	// método de salvar / gravar / incluir
 
-	public Cliente consultar(Cliente cliente) throws Exception {
+	public List<Cliente> consultar(Cliente cliente) throws Exception {
 		PreparedStatement ps = null;
 		Connection conn = null;
 		ResultSet rs = null;
+		List<Cliente> clientes = new ArrayList<Cliente>();
+	
 		if (cliente == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
-			String SQL = "SELECT * from cliente where cpf = ? ";
+			String SQL = "SELECT * from cliente where cpf = ? or nome = ? or num_carterinha = ?";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, cliente.getCpf());
+			ps.setString(2, cliente.getNomeCliente());
+			ps.setString(3, cliente.getNumCarterinha());
 			rs = ps.executeQuery();
-			rs.next();
-			cliente.setNumCarterinha(rs.getString("num_carterinha"));
-			cliente.setNomeCliente(rs.getString("nome"));
-			cliente.setDataNasci(rs.getString("data_nascimento"));
-			cliente.setSexo(rs.getString("sexo"));
-			cliente.setRg(rs.getString("rg"));
-			cliente.setCpf(rs.getString("cpf"));
-			cliente.setEndereco(rs.getString("endereco"));
-			cliente.setNumCasa(rs.getString("num_casa"));
-			cliente.setComplemento(rs.getString("complemento"));
-			cliente.setBairro(rs.getString("bairro"));
-			cliente.setCidade(rs.getString("cidade"));
-			cliente.setUf(rs.getString("uf"));
-			cliente.setTelRes(rs.getString("telefone_res"));
-			cliente.setTelCel(rs.getString("telefone_cel"));
-			cliente.setEmail(rs.getString("email"));
+			while(rs.next()){
+					
+				cliente.setNumCarterinha(rs.getString("num_carterinha"));
+				cliente.setNomeCliente(rs.getString("nome"));
+				cliente.setDataNasci(rs.getString("data_nascimento"));
+				cliente.setSexo(rs.getString("sexo"));
+				cliente.setRg(rs.getString("rg"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setEndereco(rs.getString("endereco"));
+				cliente.setNumCasa(rs.getString("num_casa"));
+				cliente.setComplemento(rs.getString("complemento"));
+				cliente.setBairro(rs.getString("bairro"));
+				cliente.setCidade(rs.getString("cidade"));
+				cliente.setUf(rs.getString("uf"));
+				cliente.setTelRes(rs.getString("telefone_res"));
+				cliente.setTelCel(rs.getString("telefone_cel"));
+				cliente.setEmail(rs.getString("email"));
 
-			return cliente;
+				clientes.add(cliente);
+			}
 		} catch (SQLException sqle) {
 			throw new Exception("Erro ao inserir dados " + sqle);
 		} finally {
 			ConnectionFactory.closeConnection(conn, ps);
 		}
 
+		return clientes;
 	}
 
 	public void excluir(Cliente cliente) throws Exception {
