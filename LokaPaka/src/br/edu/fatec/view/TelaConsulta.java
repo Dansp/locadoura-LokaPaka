@@ -77,6 +77,7 @@ public class TelaConsulta extends JFrame {
 		panelTable.setBounds(84, 95, 800, 365);
 		
 		table = new JTable();
+		table.setFillsViewportHeight(true);
 		table.setBackground(Color.WHITE);
 	
 		scrollpane = new JScrollPane(table);
