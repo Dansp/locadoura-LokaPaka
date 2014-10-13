@@ -20,7 +20,7 @@ public class ConnectionFactory {
 			throw new Exception(e.getMessage());
 		}
 	}
-	// fecha uma conexÃ£o de trÃª formas: conn, stmt, rs
+	// fecha uma conexão de três formas: conn, stmt, rs
 
 	public static void closeConnection (Connection comn, Statement stmt, ResultSet rs) throws Exception{
 		close (comn,stmt,rs);

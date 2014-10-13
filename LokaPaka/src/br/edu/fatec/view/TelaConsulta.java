@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.attribute.standard.PrinterState;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -27,6 +28,10 @@ import br.edu.fatec.dao.ClienteDAO;
 import br.edu.fatec.dao.FilmeDAO;
 import br.edu.fatec.util.ConsultaTableModelCliente;
 import br.edu.fatec.util.ConsultaTableModelFilme;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaConsulta extends JFrame {
 
@@ -35,6 +40,7 @@ public class TelaConsulta extends JFrame {
 	private JTable table;
 	private JScrollPane scrollpane;
 	private JComboBox comboBoxEscolhaPesquisa;
+	private JLabel labelMensagemPesquisa;
 	
 	/**
 	 * Launch the application.
@@ -64,24 +70,28 @@ public class TelaConsulta extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblPesquisa = new JLabel("Pesquisa:");
+		lblPesquisa.setForeground(Color.WHITE);
 		lblPesquisa.setBounds(23, 26, 79, 14);
 		contentPane.add(lblPesquisa);
 		
 		textFieldPesquisa = new JTextField();
-		textFieldPesquisa.setBounds(84, 23, 366, 20);
+		textFieldPesquisa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				textFieldPesquisa.setText("");
+				textFieldPesquisa.setForeground(Color.BLACK);
+			}
+		});
+		textFieldPesquisa.setForeground(Color.LIGHT_GRAY);
+		textFieldPesquisa.setText("C\u00F3digo Nome ou CPF");
+		textFieldPesquisa.setToolTipText("");
+		textFieldPesquisa.setBounds(104, 23, 623, 20);
 		contentPane.add(textFieldPesquisa);
 		textFieldPesquisa.setColumns(10);
 		
 		panelTable = new JPanel();
 		panelTable.setBorder(BorderFactory.createTitledBorder("Lista de consulta"));
-		panelTable.setBounds(84, 95, 800, 365);
-		
-		table = new JTable();
-		table.setFillsViewportHeight(true);
-		table.setBackground(Color.WHITE);
-	
-		scrollpane = new JScrollPane(table);
-		panelTable.add(scrollpane);
+		panelTable.setBounds(84, 95, 800, 281);
 		
 		JButton btnPequisar = new JButton("Pesquisar");
 		btnPequisar.addActionListener(new ActionListener() {
@@ -107,9 +117,11 @@ public class TelaConsulta extends JFrame {
 						
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Consulta inválida. Digite novamente");
+					
 					}
 				} else {
 				try {
+					
 					List<Filme> filmes = new ArrayList<Filme>();
 					Filme filme = new Filme();
 					filme.setCodCliente(textFieldPesquisa.getText());
@@ -124,31 +136,51 @@ public class TelaConsulta extends JFrame {
 					table.setModel(new ConsultaTableModelFilme(filmes));
 					
 
-					JOptionPane.showMessageDialog(null, "Consulta com sucesso");
+					//JOptionPane.showMessageDialog(null, "Consulta com sucesso");
+					labelMensagemPesquisa.setText("Consulta com sucesso");
 				} catch (Exception ex) {
+					labelMensagemPesquisa.setText("");
 					JOptionPane.showMessageDialog(null, "Consulta inválida. Digite novamente");
 				}
 			}
 			
 			}
 		});
-		btnPequisar.setBounds(460, 22, 114, 23);
+		btnPequisar.setBounds(760, 22, 114, 23);
 		contentPane.add(btnPequisar);
+		
+		table = new JTable();
+		table.setCellSelectionEnabled(true);
+		table.setColumnSelectionAllowed(true);
+		table.setBackground(Color.WHITE);
+		
+			scrollpane = new JScrollPane(table);
+			scrollpane.setBounds(104, 119, 770, 238);
+			contentPane.add(scrollpane);
 		contentPane.add(panelTable);
 		
 		comboBoxEscolhaPesquisa = new JComboBox();
 		comboBoxEscolhaPesquisa.setModel(new DefaultComboBoxModel(new String[] {"Cliente", "Filme"}));
-		comboBoxEscolhaPesquisa.setBounds(460, 66, 114, 20);
+		comboBoxEscolhaPesquisa.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				textFieldPesquisa.setForeground(Color.LIGHT_GRAY);
+				
+				if(comboBoxEscolhaPesquisa.getSelectedIndex() == 0){
+					
+					textFieldPesquisa.setText("Código Nome ou CPF");
+				} else {
+			
+					textFieldPesquisa.setText("Código ou Título");
+				}
+			}
+		});
+		comboBoxEscolhaPesquisa.setBounds(760, 67, 114, 20);
 		contentPane.add(comboBoxEscolhaPesquisa);
 		
 		JLabel lblPesquisarPor = new JLabel("Pesquisar por: ");
-		lblPesquisarPor.setBounds(348, 70, 102, 14);
+		lblPesquisarPor.setForeground(Color.WHITE);
+		lblPesquisarPor.setBounds(625, 70, 102, 14);
 		contentPane.add(lblPesquisarPor);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.CYAN);
-		panel.setBounds(0, 0, 884, 94);
-		contentPane.add(panel);
 		
 		JButton button = new JButton("");
 		button.addActionListener(new ActionListener() {
@@ -160,5 +192,25 @@ public class TelaConsulta extends JFrame {
 		button.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/arrow_left.png")));
 		button.setBounds(25, 316, 49, 23);
 		contentPane.add(button);
+		
+		labelMensagemPesquisa = new JLabel("");
+		labelMensagemPesquisa.setForeground(Color.GREEN);
+		labelMensagemPesquisa.setBounds(84, 446, 241, 14);
+		contentPane.add(labelMensagemPesquisa);
+		
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/pencil.png")));
+		btnAlterar.setBounds(613, 412, 114, 23);
+		contentPane.add(btnAlterar);
+		
+		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/delete.png")));
+		btnExcluir.setBounds(750, 412, 124, 23);
+		contentPane.add(btnExcluir);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(1, 162, 237));
+		panel.setBounds(0, 0, 884, 94);
+		contentPane.add(panel);
 	}
 }

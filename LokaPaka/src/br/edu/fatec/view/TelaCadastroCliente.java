@@ -415,11 +415,12 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(btnLimpar);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.CYAN);
-		panel.setBounds(0, 0, 656, 37);
+		panel.setBackground(new Color(1, 162, 237));
+		panel.setBounds(0, 0, 646, 37);
 		contentPane.add(panel);
 		
 		JLabel lblCadastroDeClientes = new JLabel("CADASTRO DE CLIENTES");
+		lblCadastroDeClientes.setForeground(Color.WHITE);
 		lblCadastroDeClientes.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel.add(lblCadastroDeClientes);
 		

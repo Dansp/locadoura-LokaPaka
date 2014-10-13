@@ -57,11 +57,12 @@ public class TelaCadastroFilme extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.CYAN);
+		panel.setBackground(new Color(1, 162, 237));
 		panel.setBounds(0, 0, 434, 41);
 		contentPane.add(panel);
 		
 		JLabel lblCadastroDeFilme = new JLabel("CADASTRO DE FILME");
+		lblCadastroDeFilme.setForeground(Color.WHITE);
 		lblCadastroDeFilme.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel.add(lblCadastroDeFilme);
 		
