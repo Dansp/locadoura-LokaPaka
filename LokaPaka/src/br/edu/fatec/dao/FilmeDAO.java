@@ -27,6 +27,7 @@ public class FilmeDAO {
 	public void salvar(Filme filme) throws Exception{
 		PreparedStatement ps = null;
 		Connection conn = null;
+		ResultSet rs = null;
 		if (filme == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
@@ -41,10 +42,23 @@ public class FilmeDAO {
 
 			// salva no banco de dados
 			ps.executeUpdate();
-
+			
+			ps = null;
+			String SQL2 = "SELECT * from filme where titulo = ?";
+			//este bloco procura pelo id do filme gerado no banco altomaticamente
+			ps = conn.prepareStatement(SQL2);
+			ps.setString(1, filme.getTitulo());
+			rs = ps.executeQuery();
+			
+			while(rs.next()){
+				filme.setCodCliente(rs.getString("idfilme"));
+			}
+			
 		} catch (SQLException sqle) {
 			throw new Exception("Erro ao inserir dados " + sqle);
 		} finally {
+			
+			
 			ConnectionFactory.closeConnection(conn, ps);
 		}
 		

@@ -1,28 +1,29 @@
 package br.edu.fatec.view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import br.edu.fatec.bean.Filme;
 import br.edu.fatec.dao.FilmeDAO;
+import br.edu.fatec.util.LimpaCampos;
 
 public class TelaCadastroFilme extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtAno;
 	private JTextField txtTitulo;
@@ -123,12 +124,11 @@ public class TelaCadastroFilme extends JFrame {
 					txtGeradoAutomticamente.setText(filme.getCodCliente());
 					System.out.println(filme.getCodCliente());
 					label.setText("Gravado com sucesso!!!");
-					
-					
 									
 				}catch(Exception e){
+					new LimpaCampos(TelaCadastroFilme.this);
 					label.setText("Erro ao gravar Dados, tente novamente");
-				}
+				} 	
 			}
 		});
 		btnSalvar.setBounds(292, 203, 110, 23);
@@ -157,8 +157,14 @@ public class TelaCadastroFilme extends JFrame {
 		contentPane.add(txtGeradoAutomticamente);
 		txtGeradoAutomticamente.setColumns(10);
 		
-		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(195, 203, 89, 23);
+		JButton btnAlterar = new JButton("Limpar");
+		btnAlterar.setSelectedIcon(new ImageIcon(TelaCadastroFilme.class.getResource("/br/edu/fatec/icons/textfield_delete.png")));
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new LimpaCampos(TelaCadastroFilme.this);
+			}
+		});
+		btnAlterar.setBounds(313, 52, 89, 34);
 		contentPane.add(btnAlterar);
 		
 	}
