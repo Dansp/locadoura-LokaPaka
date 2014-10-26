@@ -2,12 +2,16 @@ package br.edu.fatec.view;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.attribute.standard.PrinterState;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -28,18 +32,18 @@ import br.edu.fatec.dao.ClienteDAO;
 import br.edu.fatec.dao.FilmeDAO;
 import br.edu.fatec.util.ConsultaTableModelCliente;
 import br.edu.fatec.util.ConsultaTableModelFilme;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class TelaConsulta extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane, panelTable;
 	private JTextField textFieldPesquisa;
 	private JTable table;
 	private JScrollPane scrollpane;
-	private JComboBox comboBoxEscolhaPesquisa;
+	private JComboBox<?> comboBoxEscolhaPesquisa;
 	private JLabel labelMensagemPesquisa;
 	
 	/**
@@ -62,8 +66,16 @@ public class TelaConsulta extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaConsulta() {
+		
+		Toolkit tk = Toolkit.getDefaultToolkit();  
+		int xSize = ((int) tk.getScreenSize().getWidth()); 
+		int ySize = ((int) tk.getScreenSize().getHeight());
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setUndecorated(true);
+		//desabilita o botão para não ser clicaco
+		//setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 509);
+		setBounds(100, 100, 1024, 720);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -91,7 +103,7 @@ public class TelaConsulta extends JFrame {
 		
 		panelTable = new JPanel();
 		panelTable.setBorder(BorderFactory.createTitledBorder("Lista de consulta"));
-		panelTable.setBounds(84, 95, 800, 281);
+		panelTable.setBounds(84, 95, 1266, 573);
 		
 		JButton btnPequisar = new JButton("Pesquisar");
 		btnPequisar.addActionListener(new ActionListener() {
@@ -155,8 +167,11 @@ public class TelaConsulta extends JFrame {
 		table.setBackground(Color.WHITE);
 		
 			scrollpane = new JScrollPane(table);
-			scrollpane.setBounds(104, 119, 770, 238);
+			scrollpane.setBounds(104, 119, 1216, 515);
 			contentPane.add(scrollpane);
+			
+			JScrollPane scrollPane = new JScrollPane();
+			scrollpane.setColumnHeaderView(scrollPane);
 		contentPane.add(panelTable);
 		
 		comboBoxEscolhaPesquisa = new JComboBox();
@@ -200,17 +215,17 @@ public class TelaConsulta extends JFrame {
 		
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/pencil.png")));
-		btnAlterar.setBounds(613, 412, 114, 23);
+		btnAlterar.setBounds(613, 697, 114, 23);
 		contentPane.add(btnAlterar);
 		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/delete.png")));
-		btnExcluir.setBounds(750, 412, 124, 23);
+		btnExcluir.setBounds(760, 697, 124, 23);
 		contentPane.add(btnExcluir);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(1, 162, 237));
-		panel.setBounds(0, 0, 884, 94);
+		panel.setBounds(0, 0, xSize, 94);
 		contentPane.add(panel);
 	}
 }
