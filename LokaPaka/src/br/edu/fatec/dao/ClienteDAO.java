@@ -136,7 +136,7 @@ public class ClienteDAO {
 
 		try {
 			String SQL = "UPDATE cliente SET  nome = ?, data_nascimento = ?, sexo= ?,  rg= ?, cpf= ?,  endereco= ?,  num_casa= ?, complemento= ?,"
-					+ " bairro= ?, cidade= ?, uf= ?, telefone_res= ?, telefone_cel= ?, email= ? where num_carterinha = ?";
+					+ " bairro= ?, cidade= ?, uf= ?, telefone_res= ?, telefone_cel= ?, email= ?";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, cliente.getNomeCliente());
@@ -153,7 +153,7 @@ public class ClienteDAO {
 			ps.setString(12, cliente.getTelRes());
 			ps.setString(13, cliente.getTelCel());
 			ps.setString(14, cliente.getEmail());
-			ps.setString(15, cliente.getNumCarterinha());
+			
 
 			ps.executeUpdate();
 		} catch (SQLException sqle) {

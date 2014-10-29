@@ -48,6 +48,14 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 	public int getRowCount() {
 		return clientes.size();
 	}
+	
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		
+		fireTableDataChanged();
+	}
+	
+	
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -88,6 +96,14 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 		return null;
 	}
 	
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		if(col == 0){
+			return false;
+		} else {
+			return true;
+		}
+	}
 	
 	@Override
 	public String getColumnName(int column) {
@@ -179,6 +195,8 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 		}
 		return null;
 	}
+	
+	
 	
 	public Cliente get(int row){
 		return clientes.get(row);

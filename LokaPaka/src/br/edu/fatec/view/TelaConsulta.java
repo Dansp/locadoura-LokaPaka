@@ -32,6 +32,8 @@ import br.edu.fatec.dao.ClienteDAO;
 import br.edu.fatec.dao.FilmeDAO;
 import br.edu.fatec.util.ConsultaTableModelCliente;
 import br.edu.fatec.util.ConsultaTableModelFilme;
+import br.edu.fatec.util.SetaTamanhoTela;
+import javax.swing.ScrollPaneConstants;
 
 public class TelaConsulta extends JFrame {
 
@@ -67,15 +69,14 @@ public class TelaConsulta extends JFrame {
 	 */
 	public TelaConsulta() {
 		
-		Toolkit tk = Toolkit.getDefaultToolkit();  
-		int xSize = ((int) tk.getScreenSize().getWidth()); 
-		int ySize = ((int) tk.getScreenSize().getHeight());
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setUndecorated(true);
+		SetaTamanhoTela tela = new SetaTamanhoTela(this);
+		int x = tela.WIDTH();
+		int y = tela.HEIGHT();
+		
 		//desabilita o botão para não ser clicaco
 		//setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1024, 720);
+		setBounds(100, 100, x, y);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -103,7 +104,7 @@ public class TelaConsulta extends JFrame {
 		
 		panelTable = new JPanel();
 		panelTable.setBorder(BorderFactory.createTitledBorder("Lista de consulta"));
-		panelTable.setBounds(84, 95, 1266, 573);
+		panelTable.setBounds(10, 95, 1340, 573);
 		
 		JButton btnPequisar = new JButton("Pesquisar");
 		btnPequisar.addActionListener(new ActionListener() {
@@ -162,12 +163,15 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(btnPequisar);
 		
 		table = new JTable();
+		table.setFillsViewportHeight(true);
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(true);
 		table.setBackground(Color.WHITE);
 		
+		
+		
 			scrollpane = new JScrollPane(table);
-			scrollpane.setBounds(104, 119, 1216, 515);
+			scrollpane.setBounds(30, 119, 1300, 515);
 			contentPane.add(scrollpane);
 			
 			JScrollPane scrollPane = new JScrollPane();
@@ -201,11 +205,11 @@ public class TelaConsulta extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				new MainLayout().setVisible(true);
+				//new MainLayout().setVisible(true);
 			}
 		});
 		button.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/arrow_left.png")));
-		button.setBounds(25, 316, 49, 23);
+		button.setBounds(53, 714, 49, 23);
 		contentPane.add(button);
 		
 		labelMensagemPesquisa = new JLabel("");
@@ -214,6 +218,44 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(labelMensagemPesquisa);
 		
 		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				table.getModel();
+				System.out.println("Valor = " + table.getValueAt(0, 1).toString());
+				try {
+
+					Cliente cliente = new Cliente();
+					//table.getModel();
+					
+					System.out.println("Valor = " + table.getValueAt(0, 1).toString());
+					
+					//cliente.setNomeCliente(table.getValueAt(0, 1).toString());
+					cliente.setNumCarterinha(table.getValueAt(0, 0).toString());
+					cliente.setNomeCliente(table.getValueAt(0, 1).toString());
+					cliente.setDataNasci(table.getValueAt(0, 2).toString());
+					cliente.setSexo(table.getValueAt(0, 3).toString());
+					cliente.setRg(table.getValueAt(0, 4).toString());
+					cliente.setCpf(table.getValueAt(0, 5).toString());
+					cliente.setEndereco(table.getValueAt(0, 6).toString());
+					cliente.setNumCasa(table.getValueAt(0, 7).toString());
+					cliente.setComplemento(table.getValueAt(0, 8).toString());
+					cliente.setBairro(table.getValueAt(0, 9).toString());
+					cliente.setCidade(table.getValueAt(0, 10).toString());
+					cliente.setUf(table.getValueAt(0, 11).toString());
+					cliente.setTelRes(table.getValueAt(0, 12).toString());
+					cliente.setTelCel(table.getValueAt(0, 13).toString());
+					cliente.setEmail(table.getValueAt(0, 14).toString());
+
+					ClienteDAO dao = new ClienteDAO();
+					dao.alterar(cliente);
+					JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Não foi possível fazer a alteração, tente mais tarde!");
+
+				}
+			}
+		});
 		btnAlterar.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/pencil.png")));
 		btnAlterar.setBounds(613, 697, 114, 23);
 		contentPane.add(btnAlterar);
@@ -225,7 +267,7 @@ public class TelaConsulta extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(1, 162, 237));
-		panel.setBounds(0, 0, xSize, 94);
+		panel.setBounds(0, 0, x, 94);
 		contentPane.add(panel);
 	}
 }

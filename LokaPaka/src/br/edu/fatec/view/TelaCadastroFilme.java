@@ -140,7 +140,7 @@ public class TelaCadastroFilme extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				dispose();
-				new MainLayout().setVisible(true);
+				//new MainLayout().setVisible(true);
 			}
 		});
 		btnVoltar.setBounds(81, 203, 89, 23);

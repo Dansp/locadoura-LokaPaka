@@ -66,6 +66,7 @@ public class TelaCadastroCliente extends JFrame {
 	 * @throws ParseException 
 	 */
 	public TelaCadastroCliente() throws ParseException {
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroCliente.class.getResource("/br/edu/fatec/icons/lokapaka.ico")));
 		setTitle("Cadastro de Clientes");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -258,50 +259,6 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 		contentPane.add(btnCadastrar);
-
-		JButton btnConsultar = new JButton("Consultar");
-		
-		btnConsultar.setToolTipText("Consultar cliente SOMENTE pelo CPF ");
-		btnConsultar.setBounds(392, 425, 117, 25);
-		btnConsultar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				/*
-				 * será retirado
-				try {
-					Cliente cliente = new Cliente();
-					cliente.setCpf(txtCPF.getText());
-					ClienteDAO dao = new ClienteDAO();
-
-					cliente = dao.consultar(cliente);
-
-					// apresentar os dados
-
-					txtCarterinha.setText(cliente.getNumCarterinha());
-					txtNome.setText(cliente.getNomeCliente());
-					txtNascimento.setText(cliente.getDataNasci());
-					comboBoxSexo.setSelectedItem(cliente.getSexo());
-					txtRG.setText(cliente.getRg());
-					txtCPF.setText(cliente.getCpf());
-					txtEndereco.setText(cliente.getEndereco());
-					txtNumCasa.setText(cliente.getNumCasa());
-					txtComplemento.setText(cliente.getComplemento());
-					txtBairro.setText(cliente.getBairro());
-					txtCidade.setText(cliente.getCidade());
-					comboBoxUF.setSelectedItem(cliente.getUf());
-					txtResidencia.setText(cliente.getTelRes());
-					txtCelular.setText(cliente.getTelCel());
-					txtEmail.setText(cliente.getEmail());
-
-					JOptionPane.showMessageDialog(null, "Consulta com sucesso");
-				} catch (Exception ex) {
-					JOptionPane.showMessageDialog(null, "Consulta inválida. Digite novamente");
-
-				}*/
-			}
-			
-
-		});
-		contentPane.add(btnConsultar);
 
 		JButton btnAlterar = new JButton("Alterar");
 		btnAlterar.setIcon(new ImageIcon(TelaCadastroCliente.class.getResource("/br/edu/fatec/icons/database_edit.png")));

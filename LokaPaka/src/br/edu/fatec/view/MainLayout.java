@@ -87,7 +87,7 @@ public class MainLayout extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				dispose();
+				//dispose();
 			}
 		});
 		mnCliente.add(mntmMaiorDe);
@@ -101,7 +101,7 @@ public class MainLayout extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				dispose();
+				//dispose();
 			}
 		});
 		mnCliente.add(mntmMenorDe);
@@ -110,7 +110,7 @@ public class MainLayout extends JFrame {
 		mntmFilme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new TelaCadastroFilme().setVisible(true);
-				dispose();
+				//dispose();
 				
 			}
 		});
@@ -120,7 +120,7 @@ public class MainLayout extends JFrame {
 		mnNewMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-					dispose();
+					//dispose();
 					new TelaConsulta().setVisible(true);			
 			}
 		});
