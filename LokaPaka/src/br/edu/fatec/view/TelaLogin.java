@@ -23,6 +23,8 @@ import br.edu.fatec.dao.FuncionarioDAO;
 
 
 
+import br.edu.fatec.util.SetaTamanhoTela;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -33,8 +35,11 @@ import java.awt.FlowLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
+
 import java.awt.event.MouseMotionAdapter;
+
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
