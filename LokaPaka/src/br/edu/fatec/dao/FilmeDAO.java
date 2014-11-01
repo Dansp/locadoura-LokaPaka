@@ -69,15 +69,29 @@ public class FilmeDAO {
 		Connection conn = null;
 		ResultSet rs = null;
 		List<Filme> filmes = new ArrayList<Filme>();
+		String aux = "Código ou Título";
 		if (filme == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
-			String SQL = "SELECT * from filme where titulo = ? or idfilme = ? or genero = ?";
 			conn = this.comn;
-			ps = conn.prepareStatement(SQL);
+			//String SQL = "SELECT * from filme where titulo = ? or idfilme = ? or genero = ?";
+			
+			String SQL2 = "select * from filme where (titulo LIKE CONCAT('%', ?, '%')) or (genero LIKE CONCAT('%', ?, '%')) "
+					+ "or (idfilme LIKE CONCAT('%', ?, '%'))";
+			
+			String SQL3 = "select * from filme where (titulo LIKE CONCAT('%', ?, '%')) and (genero LIKE CONCAT('%', ?, '%')) "
+					+ "or (idfilme LIKE CONCAT('%', ?, '%'))";
+			
+			if((!filme.getTitulo().equals("") || !filme.getTitulo().equals(aux)) 
+				&& !filme.getGenero().equals("Selecione")){
+				ps = conn.prepareStatement(SQL3);
+			} else {
+				ps = conn.prepareStatement(SQL2);
+			}
+			
 			ps.setString(1, filme.getTitulo());
-			ps.setString(2, filme.getCodCliente());
-			ps.setString(3, filme.getGenero());
+			ps.setString(2, filme.getGenero());
+			ps.setString(3, filme.getCodCliente());
 			rs = ps.executeQuery();
 			
 			while(rs.next()){

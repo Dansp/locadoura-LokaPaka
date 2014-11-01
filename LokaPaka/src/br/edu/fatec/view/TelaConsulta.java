@@ -40,6 +40,10 @@ import br.edu.fatec.util.SetaTamanhoTela;
 import javax.swing.ScrollPaneConstants;
 
 import org.omg.CORBA.Object;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaConsulta extends JFrame {
 
@@ -392,20 +396,21 @@ public class TelaConsulta extends JFrame {
 		if (comboBoxEscolhaPesquisa.getSelectedIndex() == 0) {
 			try {
 				Cliente cliente = new Cliente();
-				//cliente.setNumCarterinha(txtCarterinha.getText());
+				cliente.setNumCarterinha(table.getValueAt(row, 0).toString());
 				ClienteDAO dao = new ClienteDAO();
 
 				dao.excluir(cliente);
 
 				
-				JOptionPane.showMessageDialog(null,
-						"Excluido com sucesso");
+				//JOptionPane.showMessageDialog(null,"Excluido com sucesso");
 				
 				
 			} catch (Exception ex) {
 				JOptionPane
 						.showMessageDialog(null,
 								"Não foi possível fazer a exclusão, tente mais tarde!");
+			} finally {
+				consultarTable();
 			}
 
 		} else {
@@ -418,7 +423,6 @@ public class TelaConsulta extends JFrame {
 
 				//JOptionPane.showMessageDialog(null, "Excluido com sucesso");
 				
-		    table.removeRowSelectionInterval(0, 0);   
 			} catch (Exception ex) {
 				JOptionPane
 						.showMessageDialog(null,
