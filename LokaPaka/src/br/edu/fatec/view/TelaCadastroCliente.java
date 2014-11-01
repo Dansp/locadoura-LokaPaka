@@ -69,7 +69,6 @@ public class TelaCadastroCliente extends JFrame {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaCadastroCliente.class.getResource("/br/edu/fatec/icons/lokapaka.ico")));
 		setTitle("Cadastro de Clientes");
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(200, 200, 662, 522);
 		contentPane = new JLayeredPane();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -342,7 +341,6 @@ public class TelaCadastroCliente extends JFrame {
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				new MainLayout().setVisible(true);
 			}
 		});
 		contentPane.add(btnSair);

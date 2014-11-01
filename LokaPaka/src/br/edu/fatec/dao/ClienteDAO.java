@@ -70,14 +70,17 @@ public class ClienteDAO {
 		if (cliente == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
-			String SQL = "SELECT * from cliente where cpf = ? or nome = ? or num_carterinha = ?";
+			String SQL = "SELECT * from cliente where cpf = ? or nome = ? or num_carterinha = ? or uf = ?";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, cliente.getCpf());
 			ps.setString(2, cliente.getNomeCliente());
 			ps.setString(3, cliente.getNumCarterinha());
+			ps.setString(4, cliente.getUf());
 			rs = ps.executeQuery();
 			while(rs.next()){
+				
+				cliente = new Cliente();
 					
 				cliente.setNumCarterinha(rs.getString("num_carterinha"));
 				cliente.setNomeCliente(rs.getString("nome"));

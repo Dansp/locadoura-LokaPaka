@@ -3,12 +3,14 @@ package br.edu.fatec.util;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
-
-import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
 
 public class ConsultaTableModelFilme extends AbstractTableModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final int COL_COD_CLIENTE = 0;
 	private static final int COL_TITULO = 1;
 	private static final int COL_DIRETOR = 2;
@@ -32,6 +34,28 @@ public class ConsultaTableModelFilme extends AbstractTableModel{
 	public int getRowCount() {
 		return filmes.size();
 	}
+	
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		Filme filme = filmes.get(rowIndex);
+		
+		if(columnIndex == COL_COD_CLIENTE){
+			System.out.println("Aqui esta: " + aValue);
+			filme.setCodCliente((String) aValue);
+		} else if(columnIndex == COL_TITULO){
+			filme.setTitulo((String) aValue); ;
+		} else if (columnIndex == COL_DIRETOR){
+			filme.setDiretor((String) aValue);
+		} else if (columnIndex ==  COL_ANO){
+			filme.setAno((String) aValue);;
+		} else if (columnIndex == COL_GENERO){
+			filme.setGenero((String) aValue);
+		}
+		
+        fireTableCellUpdated(rowIndex, columnIndex);     
+	}
+	
+	
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -49,6 +73,15 @@ public class ConsultaTableModelFilme extends AbstractTableModel{
 			return filme.getGenero();
 		}
 		return null;
+	}
+
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		if(col == 0){
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	
@@ -97,5 +130,4 @@ public class ConsultaTableModelFilme extends AbstractTableModel{
 	public Filme get(int row){
 		return filmes.get(row);
 	}
-
 }
