@@ -31,23 +31,21 @@ public class ClienteDAO {
 		if (cliente == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
-			String SQL = "INSERT INTO cliente (nome, data_nascimento, sexo, rg, cpf, endereco, num_casa,  complemento, bairro, cidade, uf, telefone_res, telefone_cel, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String SQL = "INSERT INTO cliente (nome, data_nascimento, cpf, endereco, num_casa,  complemento, bairro, cidade, uf, telefone_res, telefone_cel, email) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, cliente.getNomeCliente());
 			ps.setString(2, cliente.getDataNasci());
-			ps.setString(3, cliente.getSexo());
-			ps.setString(4, cliente.getRg());
-			ps.setString(5, cliente.getCpf());
-			ps.setString(6, cliente.getEndereco());
-			ps.setString(7, cliente.getNumCasa());
-			ps.setString(8, cliente.getComplemento());
-			ps.setString(9, cliente.getBairro());
-			ps.setString(10, cliente.getCidade());
-			ps.setString(11, cliente.getUf());
-			ps.setString(12, cliente.getTelRes());
-			ps.setString(13, cliente.getTelCel());
-			ps.setString(14, cliente.getEmail());
+			ps.setString(3, cliente.getCpf());
+			ps.setString(4, cliente.getEndereco());
+			ps.setString(5, cliente.getNumCasa());
+			ps.setString(6, cliente.getComplemento());
+			ps.setString(7, cliente.getBairro());
+			ps.setString(8, cliente.getCidade());
+			ps.setString(9, cliente.getUf());
+			ps.setString(10, cliente.getTelRes());
+			ps.setString(11, cliente.getTelCel());
+			ps.setString(12, cliente.getEmail());
 
 			// salva no banco de dados
 			ps.executeUpdate();
@@ -102,8 +100,6 @@ public class ClienteDAO {
 				cliente.setNumCarterinha(rs.getString("num_carterinha"));
 				cliente.setNomeCliente(rs.getString("nome"));
 				cliente.setDataNasci(rs.getString("data_nascimento"));
-				cliente.setSexo(rs.getString("sexo"));
-				cliente.setRg(rs.getString("rg"));
 				cliente.setCpf(rs.getString("cpf"));
 				cliente.setEndereco(rs.getString("endereco"));
 				cliente.setNumCasa(rs.getString("num_casa"));
@@ -155,24 +151,22 @@ public class ClienteDAO {
 			throw new Exception("O valor passado não pode ser nulo");
 
 		try {
-			String SQL = "UPDATE cliente SET  nome = ?, data_nascimento = ?, sexo= ?,  rg= ?, cpf= ?,  endereco= ?,  num_casa= ?, complemento= ?,"
+			String SQL = "UPDATE cliente SET  nome = ?, data_nascimento = ?, cpf= ?,  endereco= ?,  num_casa= ?, complemento= ?,"
 					+ " bairro= ?, cidade= ?, uf= ?, telefone_res= ?, telefone_cel= ?, email= ?";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, cliente.getNomeCliente());
 			ps.setString(2, cliente.getDataNasci());
-			ps.setString(3, cliente.getSexo());
-			ps.setString(4, cliente.getRg());
-			ps.setString(5, cliente.getCpf());
-			ps.setString(6, cliente.getEndereco());
-			ps.setString(7, cliente.getNumCasa());
-			ps.setString(8, cliente.getComplemento());
-			ps.setString(9, cliente.getBairro());
-			ps.setString(10, cliente.getCidade());
-			ps.setString(11, cliente.getUf());
-			ps.setString(12, cliente.getTelRes());
-			ps.setString(13, cliente.getTelCel());
-			ps.setString(14, cliente.getEmail());
+			ps.setString(3, cliente.getCpf());
+			ps.setString(4, cliente.getEndereco());
+			ps.setString(5, cliente.getNumCasa());
+			ps.setString(6, cliente.getComplemento());
+			ps.setString(7, cliente.getBairro());
+			ps.setString(8, cliente.getCidade());
+			ps.setString(9, cliente.getUf());
+			ps.setString(10, cliente.getTelRes());
+			ps.setString(11, cliente.getTelCel());
+			ps.setString(12, cliente.getEmail());
 			
 
 			ps.executeUpdate();

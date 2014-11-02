@@ -11,11 +11,11 @@ public class ConsultaTableModelFilme extends AbstractTableModel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int COL_COD_CLIENTE = 0;
-	private static final int COL_TITULO = 1;
-	private static final int COL_DIRETOR = 2;
-	private static final int COL_ANO = 3;
-	private static final int COL_GENERO = 4;
+	private static final int COL_COD_CLIENTE 	= 0;
+	private static final int COL_TITULO 		= 1;
+	private static final int COL_DIRETOR 		= 2;
+	private static final int COL_ANO 			= 3;
+	private static final int COL_GENERO 		= 4;
 	
 
 	private List<Filme> filmes;

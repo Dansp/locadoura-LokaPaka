@@ -44,6 +44,7 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 public class TelaConsulta extends JFrame {
 
@@ -97,6 +98,7 @@ public class TelaConsulta extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblPesquisa = new JLabel("Pesquisa:");
+		lblPesquisa.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPesquisa.setForeground(Color.WHITE);
 		lblPesquisa.setBounds(23, 26, 79, 14);
 		contentPane.add(lblPesquisa);
@@ -179,6 +181,7 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(comboBoxEscolhaPesquisa);
 
 		JLabel lblPesquisarPor = new JLabel("Pesquisar por: ");
+		lblPesquisarPor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPesquisarPor.setForeground(Color.WHITE);
 		lblPesquisarPor.setBounds(625, 70, 102, 14);
 		contentPane.add(lblPesquisarPor);
@@ -230,6 +233,8 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(comboBox);
 		
 		JLabel lblFiltro = new JLabel("Filtro");
+		lblFiltro.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblFiltro.setForeground(Color.WHITE);
 		lblFiltro.setBounds(922, 26, 46, 14);
 		contentPane.add(lblFiltro);
 		
@@ -253,6 +258,11 @@ public class TelaConsulta extends JFrame {
 		
 		btnCadastrar.setBounds(1190, 714, 160, 23);
 		contentPane.add(btnCadastrar);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(1, 162, 237));
+		panel.setBounds(0, 0, x, 90);
+		contentPane.add(panel);
 	}
 	
 	/**
@@ -338,19 +348,17 @@ public class TelaConsulta extends JFrame {
 						.toString());
 				cliente.setDataNasci(table.getValueAt(row, 2)
 						.toString());
-				cliente.setSexo(table.getValueAt(row, 3).toString());
-				cliente.setRg(table.getValueAt(row, 4).toString());
-				cliente.setCpf(table.getValueAt(row, 5).toString());
-				cliente.setEndereco(table.getValueAt(row, 6).toString());
-				cliente.setNumCasa(table.getValueAt(row, 7).toString());
-				cliente.setComplemento(table.getValueAt(row, 8)
+				cliente.setCpf(table.getValueAt(row, 3).toString());
+				cliente.setEndereco(table.getValueAt(row, 4).toString());
+				cliente.setNumCasa(table.getValueAt(row, 5).toString());
+				cliente.setComplemento(table.getValueAt(row, 6)
 						.toString());
-				cliente.setBairro(table.getValueAt(row, 9).toString());
-				cliente.setCidade(table.getValueAt(row, 10).toString());
-				cliente.setUf(table.getValueAt(row, 11).toString());
-				cliente.setTelRes(table.getValueAt(row, 12).toString());
-				cliente.setTelCel(table.getValueAt(row, 13).toString());
-				cliente.setEmail(table.getValueAt(row, 14).toString());
+				cliente.setBairro(table.getValueAt(row, 7).toString());
+				cliente.setCidade(table.getValueAt(row, 8).toString());
+				cliente.setUf(table.getValueAt(row, 9).toString());
+				cliente.setTelRes(table.getValueAt(row, 10).toString());
+				cliente.setTelCel(table.getValueAt(row, 11).toString());
+				cliente.setEmail(table.getValueAt(row, 12).toString());
 
 				ClienteDAO dao = new ClienteDAO();
 				dao.alterar(cliente);

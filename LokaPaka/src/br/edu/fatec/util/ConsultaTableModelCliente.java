@@ -15,20 +15,18 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 	private static final long serialVersionUID = 136832678247231777L;
 	
 	private static final int COL_NUM_CARTERINHA = 0;
-	private static final int COL_NOME = 1;
-	private static final int COL_DATA_NASC = 2;
-	private static final int COL_SEXO = 3;
-	private static final int COL_RG = 4;
-	private static final int COL_CPF = 5;
-	private static final int COL_ENDERECO = 6;
-	private static final int COL_NUM_CASA = 7;
-	private static final int COL_COMPLEMENTO = 8;
-	private static final int COL_BAIRRO = 9;
-	private static final int COL_CIDADE = 10;
-	private static final int COL_UF = 11;
-	private static final int COL_TEL_RES = 12;
-	private static final int COL_TEL_CEL = 13;
-	private static final int COL_EMAIL = 14;
+	private static final int COL_NOME 			= 1;
+	private static final int COL_DATA_NASC 		= 2;
+	private static final int COL_CPF 			= 3;
+	private static final int COL_ENDERECO 		= 4;
+	private static final int COL_NUM_CASA 		= 5;
+	private static final int COL_COMPLEMENTO 	= 6;
+	private static final int COL_BAIRRO 		= 7;
+	private static final int COL_CIDADE 		= 8;
+	private static final int COL_UF 			= 9;
+	private static final int COL_TEL_RES 		= 10;
+	private static final int COL_TEL_CEL 		= 11;
+	private static final int COL_EMAIL 			= 12;
 	
 	
 
@@ -41,7 +39,7 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 	
 	@Override
 	public int getColumnCount() {
-		return 15;
+		return 13;
 	}
 
 	@Override
@@ -67,10 +65,6 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 			return cliente.getNomeCliente();
 		} else if (columnIndex == COL_DATA_NASC){
 			return cliente.getDataNasci();
-		} else if (columnIndex ==  COL_SEXO){
-			return cliente.getSexo();
-		} else if (columnIndex == COL_RG){
-			return cliente.getRg();
 		} else if (columnIndex == COL_CPF){
 			return cliente.getCpf();
 		} else if (columnIndex == COL_ENDERECO){
@@ -118,12 +112,6 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 			case COL_DATA_NASC:
 				coluna = "Data Nascimento";
 				break;
-			case COL_SEXO:
-				coluna = "Sexo";
-				break;
-			case COL_RG:
-				coluna = "RG";
-				break;
 			case COL_CPF:
 				coluna = "Cpf";
 				break;
@@ -168,11 +156,7 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 			return String.class;
 		} else if (columnIndex == COL_DATA_NASC){
 			return String.class;
-		} else if (columnIndex ==  COL_SEXO){
-			return String.class;
-		} else if (columnIndex == COL_RG){
-			return String.class;
-		} else if (columnIndex == COL_CPF){
+		}  else if (columnIndex == COL_CPF){
 			return String.class;
 		} else if (columnIndex == COL_ENDERECO){
 			return String.class;

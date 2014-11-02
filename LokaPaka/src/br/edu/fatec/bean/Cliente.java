@@ -5,8 +5,6 @@ public class Cliente {
 	private String numCarterinha;
 	private String nomeCliente;
 	private String dataNasci;
-	private String sexo;
-	private String rg;
 	private String cpf;
 	private String endereco;
 	private String numCasa;
@@ -20,15 +18,13 @@ public class Cliente {
 	
 	
 	public Cliente(String numCarterinha, String nomeCliente, String dataNasci,
-			String sexo, String rg, String cpf, String endereco, String numCasa,
+			String cpf, String endereco, String numCasa,
 			String complemento, String bairro, String cidade, String uf,
 			String telRes, String telCel, String email) {
 		
 		this.numCarterinha = numCarterinha;
 		this.nomeCliente = nomeCliente;
 		this.dataNasci = dataNasci;
-		this.sexo = sexo;
-		this.rg = rg;
 		this.cpf = cpf;
 		this.endereco = endereco;
 		this.numCasa = numCasa;
@@ -76,27 +72,6 @@ public class Cliente {
 	public void setDataNasci(String dataNasci) {
 		this.dataNasci = dataNasci;
 	}
-
-
-	public String getSexo() {
-		return sexo;
-	}
-
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
-	}
-
-
-	public String getRg() {
-		return rg;
-	}
-
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
 
 	public String getCpf() {
 		return cpf;
