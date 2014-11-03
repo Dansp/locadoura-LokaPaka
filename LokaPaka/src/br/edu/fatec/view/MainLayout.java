@@ -126,7 +126,13 @@ public class MainLayout extends JFrame {
 		});
 		menuBar.add(mnNewMenu);
 		
-		JMenu mnNewMenu_2 = new JMenu("Relat\u00F3rio");
+		JMenu mnNewMenu_2 = new JMenu("Reserva");
+		mnNewMenu_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new TelaReserva().setVisible(true);
+			}
+		});
 		menuBar.add(mnNewMenu_2);
 		
 		JMenu mnNewMenu_3 = new JMenu("Ajuda");

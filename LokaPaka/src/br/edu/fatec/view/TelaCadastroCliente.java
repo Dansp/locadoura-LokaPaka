@@ -234,7 +234,7 @@ public class TelaCadastroCliente extends JFrame {
 					cliente.setTelRes(txtResidencia.getText());
 					
 					if(txtCelular.getText().equals("(  )    -   -   ")){
-						cliente.setTelCel(null);
+						cliente.setTelCel("");
 					} else {
 						cliente.setTelCel(txtCelular.getText());
 					}

@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -40,6 +41,7 @@ import br.edu.fatec.util.SetaTamanhoTela;
 import javax.swing.ScrollPaneConstants;
 
 import org.omg.CORBA.Object;
+
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.KeyAdapter;
@@ -62,6 +64,13 @@ public class TelaConsulta extends JFrame {
 	private JLabel labelMensagemPesquisa;
 	private JComboBox comboBox;
 	private JButton btnCadastrar;
+	protected Integer y;
+	protected Integer x;
+	
+	private static final int EXCLUIR_FILME = 0;
+	private static final int ALTERAR_FILME = 1;
+	private static final int EXCLUIR_CLIENTE = 2;
+	private static final int ALTERAR_CLIENTE = 3;
 
 	/**
 	 * Launch the application.
@@ -85,8 +94,8 @@ public class TelaConsulta extends JFrame {
 	public TelaConsulta() {
 
 		SetaTamanhoTela tela = new SetaTamanhoTela(this);
-		int x = tela.WIDTH();
-		int y = tela.HEIGHT();
+		x = tela.WIDTH();
+		y = tela.HEIGHT();
 
 		// desabilita o botão para não ser clicaco
 		// setResizable(false);
@@ -141,7 +150,11 @@ public class TelaConsulta extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				table.getModel();
 				int col = table.getSelectedColumn();
+				
 				row = table.getSelectedRow();
+				
+				table.setSelectionBackground(new Color(1, 162, 237));
+				
 				String txt = table.getValueAt(row, col).toString();
 				System.out.println("Valorteste = " + txt);
 			}
@@ -339,6 +352,11 @@ public class TelaConsulta extends JFrame {
 
 				System.out.println("Valor = "
 						+ table.getValueAt(0, 1).toString());
+				
+				for(int i = 0; i<13; i++){
+					System.out.println("Teste =" + table.getValueAt(row, i).toString());
+					
+				}
 
 				// cliente.setNomeCliente(table.getValueAt(0,
 				// 1).toString());
@@ -359,16 +377,18 @@ public class TelaConsulta extends JFrame {
 				cliente.setTelRes(table.getValueAt(row, 10).toString());
 				cliente.setTelCel(table.getValueAt(row, 11).toString());
 				cliente.setEmail(table.getValueAt(row, 12).toString());
+				
+				
 
 				ClienteDAO dao = new ClienteDAO();
-				dao.alterar(cliente);
-				JOptionPane.showMessageDialog(null,
-						"Alterado com sucesso!");
+				
+				verificaRespostaCliente(dao, cliente, ALTERAR_CLIENTE);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
-				JOptionPane
-						.showMessageDialog(null,
+				JOptionPane.showMessageDialog(null,
 								"Não foi possível fazer a alteração, tente mais tarde!");
+				consultarTable();
 
 			}
 		} else {
@@ -384,14 +404,14 @@ public class TelaConsulta extends JFrame {
 				System.out.println("ValorLast = "
 						+ table.getValueAt(0, 1).toString());
 				FilmeDAO dao = new FilmeDAO();
-				dao.alterar(filme);
-
-				JOptionPane.showMessageDialog(null,
-						"Alterado com sucesso!");
+				
+				verificaRespostaFilme(dao, filme, ALTERAR_CLIENTE);
+				
 			} catch (Exception e) {
 				JOptionPane
 						.showMessageDialog(null,
 								"Não foi possível fazer a alteração, tente mais tarde!");
+				consultarTable();
 			}
 
 		}
@@ -407,10 +427,7 @@ public class TelaConsulta extends JFrame {
 				cliente.setNumCarterinha(table.getValueAt(row, 0).toString());
 				ClienteDAO dao = new ClienteDAO();
 
-				dao.excluir(cliente);
-
-				
-				//JOptionPane.showMessageDialog(null,"Excluido com sucesso");
+				verificaRespostaCliente(dao, cliente, EXCLUIR_CLIENTE);
 				
 				
 			} catch (Exception ex) {
@@ -427,9 +444,8 @@ public class TelaConsulta extends JFrame {
 				filme.setCodCliente(table.getValueAt(row, 0).toString());
 				FilmeDAO dao = new FilmeDAO();
 
-				dao.excluir(filme);
-
-				//JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+				verificaRespostaFilme(dao, filme, EXCLUIR_FILME);
+				
 				
 			} catch (Exception ex) {
 				JOptionPane
@@ -445,7 +461,7 @@ public class TelaConsulta extends JFrame {
 	private void verificaLista(List<?> list){
 		if(list.isEmpty()){
 			labelMensagemPesquisa.setForeground(Color.RED);
-			labelMensagemPesquisa.setText("Valor(es) não encontrado");
+			labelMensagemPesquisa.setText("Valor não encontrado. Digite novamente.");
 		} else {
 			labelMensagemPesquisa.setForeground(Color.green);
 			if(list.size() > 1) {
@@ -454,5 +470,77 @@ public class TelaConsulta extends JFrame {
 				labelMensagemPesquisa.setText("Consulta com sucesso");
 			}
 		}
+	}
+	/**
+	 * Método Para Fazer a verificação da reposta escolhida do usuário na opção cliente.
+	 * @param dao
+	 * @param cliente
+	 * @throws Exception
+	 */
+	private void verificaRespostaCliente(ClienteDAO dao, Cliente cliente, int tipo) throws Exception{
+	
+		switch (tipo) {
+		case ALTERAR_CLIENTE:{
+		
+			int respostaAlterar = JOptionPane.showConfirmDialog(null, "Deseja Salvar alterações?");
+			if(respostaAlterar == JOptionPane.YES_OPTION){
+				dao.alterar(cliente);
+				labelMensagemPesquisa.setText("Alterado com sucesso!");
+			} else {
+				consultarTable();
+			}
+		
+		}
+		break;
+			
+		case EXCLUIR_CLIENTE: {
+			int respostaExcluir = JOptionPane.showConfirmDialog(null, "Deseja excluir permanentemente este cliente?");
+			if(respostaExcluir == JOptionPane.YES_OPTION){
+				dao.excluir(cliente);
+				labelMensagemPesquisa.setText("Cliente Excluido");
+			} else {
+				consultarTable();
+			}
+		}
+
+		default:
+			break;
+		}
+	}
+	/**
+	 * Método Para Fazer a verificação da reposta escolhida do usuário na opção filme.
+	 * @param dao
+	 * @param cliente
+	 * @throws Exception
+	 */
+	private void verificaRespostaFilme(FilmeDAO dao, Filme filme, int tipo) throws Exception{
+		switch (tipo) {
+		case ALTERAR_FILME:{
+		
+				int respostaAlterar = JOptionPane.showConfirmDialog(null, "Deseja Salvar alterações?");
+				if(respostaAlterar == JOptionPane.YES_OPTION){
+					dao.alterar(filme);
+					labelMensagemPesquisa.setText("Alterado com sucesso!");
+				} else {
+					consultarTable();
+				}
+		
+		}
+		break;
+			
+		case EXCLUIR_FILME: {
+			int respostaExcluir = JOptionPane.showConfirmDialog(null, "Deseja excluir permanentemente este filme?");
+			if(respostaExcluir == JOptionPane.YES_OPTION){
+				dao.excluir(filme);
+				labelMensagemPesquisa.setText("Filme Excluido");
+			} else {
+				consultarTable();
+			}
+		}
+
+		default:
+			break;
+		}
+		
 	}
 }

@@ -152,14 +152,14 @@ public class ClienteDAO {
 
 		try {
 			String SQL = "UPDATE cliente SET  nome = ?, data_nascimento = ?, cpf= ?,  endereco= ?,  num_casa= ?, complemento= ?,"
-					+ " bairro= ?, cidade= ?, uf= ?, telefone_res= ?, telefone_cel= ?, email= ?";
+					+ " bairro= ?, cidade= ?, uf= ?, telefone_res= ?, telefone_cel= ?, email= ? WHERE num_carterinha = ?";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, cliente.getNomeCliente());
 			ps.setString(2, cliente.getDataNasci());
 			ps.setString(3, cliente.getCpf());
 			ps.setString(4, cliente.getEndereco());
-			ps.setString(5, cliente.getNumCasa());
+			ps.setInt(5, Integer.parseInt(cliente.getNumCasa()));
 			ps.setString(6, cliente.getComplemento());
 			ps.setString(7, cliente.getBairro());
 			ps.setString(8, cliente.getCidade());
@@ -167,6 +167,7 @@ public class ClienteDAO {
 			ps.setString(10, cliente.getTelRes());
 			ps.setString(11, cliente.getTelCel());
 			ps.setString(12, cliente.getEmail());
+			ps.setInt(13, Integer.parseInt(cliente.getNumCarterinha()));
 			
 
 			ps.executeUpdate();

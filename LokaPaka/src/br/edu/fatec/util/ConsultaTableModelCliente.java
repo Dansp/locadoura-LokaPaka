@@ -49,8 +49,37 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 	
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		Cliente cliente = clientes.get(rowIndex);
 		
-		fireTableDataChanged();
+		if(columnIndex == COL_NUM_CARTERINHA){
+			 cliente.setNumCarterinha((String) aValue);
+		} else if(columnIndex == COL_NOME){
+			 cliente.setNomeCliente((String) aValue);
+		} else if (columnIndex == COL_DATA_NASC){
+			 cliente.setDataNasci((String) aValue);
+		} else if (columnIndex == COL_CPF){
+			 cliente.setCpf((String) aValue);
+		} else if (columnIndex == COL_ENDERECO){
+			 cliente.setEndereco((String) aValue);
+		} else if (columnIndex == COL_NUM_CASA){
+			 cliente.setNumCasa((String) aValue);
+		} else if (columnIndex == COL_COMPLEMENTO){
+			 cliente.setComplemento((String) aValue);
+		} else if (columnIndex == COL_BAIRRO){
+			 cliente.setBairro((String) aValue);
+		} else if (columnIndex == COL_CIDADE){
+			 cliente.setCidade((String) aValue);
+		} else if (columnIndex == COL_UF){
+			 cliente.setUf((String) aValue);
+		} else if (columnIndex == COL_TEL_RES){
+			 cliente.setTelRes((String) aValue);
+		} else if (columnIndex == COL_TEL_CEL){
+			 cliente.setTelCel((String) aValue);
+		} else if (columnIndex == COL_EMAIL){
+			 cliente.setEmail((String) aValue);
+		}
+		
+		 fireTableCellUpdated(rowIndex, columnIndex);  
 	}
 	
 	
@@ -141,6 +170,7 @@ public class ConsultaTableModelCliente extends AbstractTableModel{
 				break;
 			case COL_EMAIL:
 				coluna = "Email";
+				break;
 			default:
 				throw new IllegalArgumentException("Coluna inválida");
 		}
