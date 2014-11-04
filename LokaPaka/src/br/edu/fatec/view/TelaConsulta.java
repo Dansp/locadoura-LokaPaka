@@ -71,6 +71,8 @@ public class TelaConsulta extends JFrame {
 	private static final int ALTERAR_FILME = 1;
 	private static final int EXCLUIR_CLIENTE = 2;
 	private static final int ALTERAR_CLIENTE = 3;
+	
+	private int tipo;
 
 	/**
 	 * Launch the application.
@@ -137,8 +139,8 @@ public class TelaConsulta extends JFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 
-				consultarTable();
-
+				
+				pesquisarTable();
 			}
 		});
 		btnPequisar.setBounds(760, 22, 114, 23);
@@ -279,16 +281,16 @@ public class TelaConsulta extends JFrame {
 	}
 	
 	/**
-	 *  Método para fazer a consulta na tabela
+	 *  Método utilitário para fazer a consulta no banco
 	 */
-	private void consultarTable(){
+	protected List<?> consultaBD(String textoCPF, int tipo){
 		labelMensagemPesquisa.setText("");
-		if (comboBoxEscolhaPesquisa.getSelectedIndex() == 0) {
+		if (tipo == 0) {
 
 			try {
 				List<Cliente> clientes = new ArrayList<Cliente>();
 				Cliente cliente = new Cliente();
-				cliente.setCpf(textFieldPesquisa.getText());
+				cliente.setCpf(textoCPF);
 				cliente.setNomeCliente(textFieldPesquisa.getText());
 				cliente.setNumCarterinha(textFieldPesquisa.getText());
 				cliente.setUf(comboBox.getSelectedItem().toString());
@@ -296,18 +298,11 @@ public class TelaConsulta extends JFrame {
 
 				clientes = dao.consultar(cliente);
 
-				table.setModel(new ConsultaTableModelCliente(clientes));
-
-//				JOptionPane.showMessageDialog(null,
-//						"Consulta com sucesso");
-				
-				verificaLista(clientes);
-				btnAlterar.setEnabled(true);
+				return clientes;
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null,
 						"Consulta inválida. Digite novamente");
-
 			}
 		} else {
 			try {
@@ -320,21 +315,47 @@ public class TelaConsulta extends JFrame {
 				FilmeDAO dao = new FilmeDAO();
 
 				filmes = dao.consultar(filme);
+				
+				return filmes;
 
 				// apresentar os dados
 
-				table.setModel(new ConsultaTableModelFilme(filmes));
-
-				// JOptionPane.showMessageDialog(null,
-				// "Consulta com sucesso");
-				verificaLista(filmes);
-				btnAlterar.setEnabled(true);
+			
 			} catch (Exception ex) {
 				labelMensagemPesquisa.setText("");
 				JOptionPane.showMessageDialog(null,
 						"Consulta inválida. Digite novamente");
 			}
 		}
+		return null;
+	}
+	
+	/**
+	 * Método para fazer a pesquisa e colocar os valores na tabela
+	 */
+	public void pesquisarTable(){
+		
+		if(comboBoxEscolhaPesquisa.getSelectedIndex() == 0){
+			tipo = comboBoxEscolhaPesquisa.getSelectedIndex();
+			List<Cliente> clientes = (List<Cliente>) consultaBD(textFieldPesquisa.getText(), tipo);
+			table.setModel(new ConsultaTableModelCliente(clientes));
+
+//			JOptionPane.showMessageDialog(null,
+//					"Consulta com sucesso");
+			
+			verificaLista(clientes);
+			btnAlterar.setEnabled(true);
+			
+			} else {
+				tipo = comboBoxEscolhaPesquisa.getSelectedIndex();
+				List<Filme> filmes = (List<Filme>) consultaBD(textFieldPesquisa.getText(), tipo);
+				table.setModel(new ConsultaTableModelFilme(filmes));
+
+				// JOptionPane.showMessageDialog(null,
+				// "Consulta com sucesso");
+				verificaLista(filmes);
+				btnAlterar.setEnabled(true);
+			}
 	}
 	
 	/**
@@ -388,7 +409,7 @@ public class TelaConsulta extends JFrame {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null,
 								"Não foi possível fazer a alteração, tente mais tarde!");
-				consultarTable();
+				pesquisarTable();
 
 			}
 		} else {
@@ -405,13 +426,13 @@ public class TelaConsulta extends JFrame {
 						+ table.getValueAt(0, 1).toString());
 				FilmeDAO dao = new FilmeDAO();
 				
-				verificaRespostaFilme(dao, filme, ALTERAR_CLIENTE);
+				verificaRespostaFilme(dao, filme, ALTERAR_FILME);
 				
 			} catch (Exception e) {
 				JOptionPane
 						.showMessageDialog(null,
 								"Não foi possível fazer a alteração, tente mais tarde!");
-				consultarTable();
+				pesquisarTable();
 			}
 
 		}
@@ -435,7 +456,7 @@ public class TelaConsulta extends JFrame {
 						.showMessageDialog(null,
 								"Não foi possível fazer a exclusão, tente mais tarde!");
 			} finally {
-				consultarTable();
+				pesquisarTable();
 			}
 
 		} else {
@@ -452,7 +473,7 @@ public class TelaConsulta extends JFrame {
 						.showMessageDialog(null,
 								"Não foi possível fazer a exclusão, tente mais tarde!");
 			} finally {
-				consultarTable();
+				pesquisarTable();
 			}
 
 		}
@@ -477,9 +498,9 @@ public class TelaConsulta extends JFrame {
 	 * @param cliente
 	 * @throws Exception
 	 */
-	private void verificaRespostaCliente(ClienteDAO dao, Cliente cliente, int tipo) throws Exception{
+	private void verificaRespostaCliente(ClienteDAO dao, Cliente cliente, int tipoCliente) throws Exception{
 	
-		switch (tipo) {
+		switch (tipoCliente) {
 		case ALTERAR_CLIENTE:{
 		
 			int respostaAlterar = JOptionPane.showConfirmDialog(null, "Deseja Salvar alterações?");
@@ -487,7 +508,7 @@ public class TelaConsulta extends JFrame {
 				dao.alterar(cliente);
 				labelMensagemPesquisa.setText("Alterado com sucesso!");
 			} else {
-				consultarTable();
+				pesquisarTable();
 			}
 		
 		}
@@ -499,7 +520,7 @@ public class TelaConsulta extends JFrame {
 				dao.excluir(cliente);
 				labelMensagemPesquisa.setText("Cliente Excluido");
 			} else {
-				consultarTable();
+				pesquisarTable();
 			}
 		}
 
@@ -513,8 +534,8 @@ public class TelaConsulta extends JFrame {
 	 * @param cliente
 	 * @throws Exception
 	 */
-	private void verificaRespostaFilme(FilmeDAO dao, Filme filme, int tipo) throws Exception{
-		switch (tipo) {
+	private void verificaRespostaFilme(FilmeDAO dao, Filme filme, int tipoFilme) throws Exception{
+		switch (tipoFilme) {
 		case ALTERAR_FILME:{
 		
 				int respostaAlterar = JOptionPane.showConfirmDialog(null, "Deseja Salvar alterações?");
@@ -522,7 +543,7 @@ public class TelaConsulta extends JFrame {
 					dao.alterar(filme);
 					labelMensagemPesquisa.setText("Alterado com sucesso!");
 				} else {
-					consultarTable();
+					pesquisarTable();
 				}
 		
 		}
@@ -534,7 +555,7 @@ public class TelaConsulta extends JFrame {
 				dao.excluir(filme);
 				labelMensagemPesquisa.setText("Filme Excluido");
 			} else {
-				consultarTable();
+				pesquisarTable();
 			}
 		}
 

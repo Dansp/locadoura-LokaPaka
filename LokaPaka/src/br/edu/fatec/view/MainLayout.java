@@ -130,7 +130,12 @@ public class MainLayout extends JFrame {
 		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				new TelaReserva().setVisible(true);
+				try {
+					new TelaReserva().setVisible(true);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		menuBar.add(mnNewMenu_2);
