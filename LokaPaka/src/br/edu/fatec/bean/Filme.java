@@ -1,7 +1,7 @@
 package br.edu.fatec.bean;
 
 public class Filme {
-	private String codCliente;
+	private String codFilme;
 	private String titulo;
 	private String diretor;
 	private String ano;
@@ -11,21 +11,21 @@ public class Filme {
 		
 	}
 	
-	public Filme(String codCliente, String titulo, String diretor, String ano, String genero) {
+	public Filme(String codFilme, String titulo, String diretor, String ano, String genero) {
 		super();
-		this.codCliente = codCliente;
+		this.codFilme = codFilme;
 		this.titulo = titulo;
 		this.diretor = diretor;
 		this.ano = ano;
 		this.genero = genero;
 	}
 
-	public String getCodCliente(){
-		return codCliente;
+	public String getCodFilme(){
+		return codFilme;
 	}
 	
-	public void setCodCliente(String codCliente){
-		this.codCliente = codCliente;
+	public void setCodFilme(String codFilme){
+		this.codFilme = codFilme;
 	}
 	
 	public String getTitulo() {

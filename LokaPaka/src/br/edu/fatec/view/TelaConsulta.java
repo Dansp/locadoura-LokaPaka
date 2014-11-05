@@ -283,14 +283,14 @@ public class TelaConsulta extends JFrame {
 	/**
 	 *  Método utilitário para fazer a consulta no banco
 	 */
-	protected List<?> consultaBD(String textoCPF, int tipo){
+	protected List<?> consultaBD(String texto, int tipo){
 		labelMensagemPesquisa.setText("");
 		if (tipo == 0) {
 
 			try {
 				List<Cliente> clientes = new ArrayList<Cliente>();
 				Cliente cliente = new Cliente();
-				cliente.setCpf(textoCPF);
+				cliente.setCpf(texto);
 				cliente.setNomeCliente(textFieldPesquisa.getText());
 				cliente.setNumCarterinha(textFieldPesquisa.getText());
 				cliente.setUf(comboBox.getSelectedItem().toString());
@@ -309,7 +309,7 @@ public class TelaConsulta extends JFrame {
 
 				List<Filme> filmes = new ArrayList<Filme>();
 				Filme filme = new Filme();
-				filme.setCodCliente(textFieldPesquisa.getText());
+				filme.setCodFilme(texto);
 				filme.setTitulo(textFieldPesquisa.getText());
 				filme.setGenero(comboBox.getSelectedItem().toString());
 				FilmeDAO dao = new FilmeDAO();
@@ -416,7 +416,7 @@ public class TelaConsulta extends JFrame {
 			try {
 
 				Filme filme = new Filme();
-				filme.setCodCliente(table.getValueAt(row, 0).toString());
+				filme.setCodFilme(table.getValueAt(row, 0).toString());
 				filme.setTitulo(table.getValueAt(row, 1).toString());
 				filme.setDiretor(table.getValueAt(row, 2).toString());
 				filme.setAno(table.getValueAt(row, 3).toString());
@@ -462,7 +462,7 @@ public class TelaConsulta extends JFrame {
 		} else {
 			try {
 				Filme filme = new Filme();
-				filme.setCodCliente(table.getValueAt(row, 0).toString());
+				filme.setCodFilme(table.getValueAt(row, 0).toString());
 				FilmeDAO dao = new FilmeDAO();
 
 				verificaRespostaFilme(dao, filme, EXCLUIR_FILME);

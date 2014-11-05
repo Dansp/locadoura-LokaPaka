@@ -121,8 +121,8 @@ public class TelaCadastroFilme extends JFrame {
 					
 					FilmeDAO dao = new FilmeDAO();
 					dao.salvar(filme);
-					txtGeradoAutomticamente.setText(filme.getCodCliente());
-					System.out.println(filme.getCodCliente());
+					txtGeradoAutomticamente.setText(filme.getCodFilme());
+					System.out.println(filme.getCodFilme());
 					label.setText("Gravado com sucesso!!!");
 									
 				}catch(Exception e){

@@ -41,7 +41,7 @@ public class ConsultaTableModelFilme extends AbstractTableModel{
 		
 		if(columnIndex == COL_COD_CLIENTE){
 			System.out.println("Aqui esta: " + aValue);
-			filme.setCodCliente((String) aValue);
+			filme.setCodFilme((String) aValue);
 		} else if(columnIndex == COL_TITULO){
 			filme.setTitulo((String) aValue); ;
 		} else if (columnIndex == COL_DIRETOR){
@@ -62,7 +62,7 @@ public class ConsultaTableModelFilme extends AbstractTableModel{
 		Filme filme = filmes.get(rowIndex);
 		
 		if(columnIndex == COL_COD_CLIENTE){
-			return filme.getCodCliente();
+			return filme.getCodFilme();
 		} else if(columnIndex == COL_TITULO){
 			return filme.getTitulo();
 		} else if (columnIndex == COL_DIRETOR){

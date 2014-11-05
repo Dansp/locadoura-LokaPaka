@@ -50,7 +50,7 @@ public class FilmeDAO {
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
-				filme.setCodCliente(rs.getString("idfilme"));
+				filme.setCodFilme(rs.getString("idfilme"));
 			}
 			
 		} catch (SQLException sqle) {
@@ -91,14 +91,14 @@ public class FilmeDAO {
 			
 			ps.setString(1, filme.getTitulo());
 			ps.setString(2, filme.getGenero());
-			ps.setString(3, filme.getCodCliente());
+			ps.setString(3, filme.getCodFilme());
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
 				
 				filme = new Filme();
 				
-				filme.setCodCliente(rs.getString("idfilme"));
+				filme.setCodFilme(rs.getString("idfilme"));
 				filme.setTitulo(rs.getString("titulo"));
 				filme.setDiretor(rs.getString("diretor"));
 				filme.setAno(rs.getString("ano"));
@@ -133,7 +133,7 @@ public class FilmeDAO {
 			ps.setString(2, filme.getDiretor());
 			ps.setString(3, filme.getAno());
 			ps.setString(4, filme.getGenero());
-			ps.setString(5, filme.getCodCliente());
+			ps.setString(5, filme.getCodFilme());
 			
 
 			ps.executeUpdate();
@@ -154,7 +154,7 @@ public class FilmeDAO {
 			String SQL = "DELETE FROM filme WHERE idfilme = ? ";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
-			ps.setString(1, filme.getCodCliente());
+			ps.setString(1, filme.getCodFilme());
 			ps.executeUpdate();
 
 		} catch (SQLException sqle) {
