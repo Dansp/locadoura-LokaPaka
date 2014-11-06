@@ -118,6 +118,7 @@ public class TelaCadastroFilme extends JFrame {
 					filme.setDiretor(txtDiretor.getText());
 					filme.setAno(txtAno.getText());
 					filme.setGenero(comboBoxGenero.getSelectedItem().toString());
+					filme.setReservado("N");
 					
 					FilmeDAO dao = new FilmeDAO();
 					dao.salvar(filme);

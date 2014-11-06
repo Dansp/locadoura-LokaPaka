@@ -15,6 +15,7 @@ import javax.swing.JButton;
 
 import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
+import br.edu.fatec.dao.ReservaDAO;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -49,6 +50,8 @@ public class TelaReserva extends TelaConsulta {
 	private JLabel lbTituloFilme;
 	private JLabel lbDiretorFilme;
 	private JButton btnProcurarFilmeReserva;
+	private Cliente cliente;
+	private Filme filme;
 
 	/**
 	 * Launch the application.
@@ -131,7 +134,7 @@ public class TelaReserva extends TelaConsulta {
 				List<Cliente> clientes  = (List<Cliente>) consultaBD(txtCpfPesquisa.getText(), 0);
 				
 				if (!clientes.isEmpty() && clientes.size() > 0){
-					Cliente cliente  = clientes.get(0);
+					cliente  = clientes.get(0);
 					lbNome.setText(cliente.getNomeCliente());
 					lbNumCarterinha.setText(cliente.getNumCarterinha());
 					lbDataNasc.setText(cliente.getDataNasci());
@@ -222,15 +225,19 @@ public class TelaReserva extends TelaConsulta {
 				List<Filme> filmes  = (List<Filme>) consultaBD(txtCodFilme.getText(), 1);
 			
 				if (!filmes.isEmpty() && filmes.size() > 0){
-					Filme filme  = filmes.get(0);
+					filme  = filmes.get(0);
 					lbTituloFilme.setText(filme.getTitulo());
 					lbDiretorFilme.setText(filme.getDiretor());
 					lbAnoFilme.setText(filme.getAno());
 					lbGeneroFilme.setText(filme.getGenero());
 					
+					if(filme.getReservado().equals("S")){
+						JOptionPane.showMessageDialog(null, "Filme já Reservado!");
+						//TODO setar o botão fazer reserva como desabilitado
+					}
 					
 				} else {
-					int resposta = JOptionPane.showConfirmDialog(null, "Filme não encontrado");
+					JOptionPane.showConfirmDialog(null, "Filme não encontrado");
 					
 				}
 			
@@ -238,5 +245,25 @@ public class TelaReserva extends TelaConsulta {
 		});
 		btnProcurarFilmeReserva.setBounds(1022, 68, 89, 23);
 		contentPane.add(btnProcurarFilmeReserva);
+		
+		JButton btnReservar = new JButton("Reservar");
+		btnReservar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
+				try {
+					ReservaDAO dao = new ReservaDAO();
+					dao.salvar(cliente, filme);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+			}
+		});
+		btnReservar.setBounds(865, 622, 89, 23);
+		contentPane.add(btnReservar);
 	}
 }

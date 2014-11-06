@@ -30,13 +30,14 @@ public class FilmeDAO {
 		if (filme == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
-			String SQL = "INSERT INTO filme (titulo, diretor, ano, genero) values (?, ?, ?, ?)";
+			String SQL = "INSERT INTO filme (titulo, diretor, ano, genero, reservado) values (?, ?, ?, ?, ?)";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, filme.getTitulo());
 			ps.setString(2, filme.getDiretor());
 			ps.setString(3, filme.getAno());
 			ps.setString(4, filme.getGenero());
+			ps.setString(5, filme.getReservado());
 			
 
 			// salva no banco de dados
@@ -103,6 +104,7 @@ public class FilmeDAO {
 				filme.setDiretor(rs.getString("diretor"));
 				filme.setAno(rs.getString("ano"));
 				filme.setGenero(rs.getString("genero"));
+				filme.setReservado(rs.getString("reservado"));
 		
 				filmes.add(filme);
 			}
@@ -126,14 +128,15 @@ public class FilmeDAO {
 			throw new Exception("O valor passado não pode ser nulo");
 
 		try {
-			String SQL = "UPDATE filme SET titulo = ?, diretor = ?,  ano = ?, genero = ? WHERE idfilme = ?";
+			String SQL = "UPDATE filme SET titulo = ?, diretor = ?,  ano = ?, genero = ?, reservado = ? WHERE idfilme = ?";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, filme.getTitulo());
 			ps.setString(2, filme.getDiretor());
 			ps.setString(3, filme.getAno());
 			ps.setString(4, filme.getGenero());
-			ps.setString(5, filme.getCodFilme());
+			ps.setString(5, filme.getReservado());
+			ps.setString(6, filme.getCodFilme());
 			
 
 			ps.executeUpdate();
