@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.BorderFactory;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import javax.swing.JButton;
 
 import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
+import br.edu.fatec.dao.FilmeDAO;
 import br.edu.fatec.dao.ReservaDAO;
 
 import java.awt.event.ActionListener;
@@ -34,6 +36,7 @@ public class TelaReserva extends TelaConsulta {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtCpfPesquisa;
+	private JTextField txtCpfPesquisa_1;
 	private JTextField txtCodFilme;
 	private JLabel lbNumCarterinha;
 	private JLabel lbDataNasc;
@@ -52,6 +55,9 @@ public class TelaReserva extends TelaConsulta {
 	private JButton btnProcurarFilmeReserva;
 	private Cliente cliente;
 	private Filme filme;
+	private JButton btnReservar;
+	private JPanel panel_1;
+	private JPanel panel_2;
 
 	/**
 	 * Launch the application.
@@ -82,48 +88,50 @@ public class TelaReserva extends TelaConsulta {
 		contentPane.setLayout(null);
 		
 		JLabel lblCdigoDoCliente = new JLabel("CPF do Cliente:");
-		lblCdigoDoCliente.setBounds(64, 72, 116, 14);
+		lblCdigoDoCliente.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCdigoDoCliente.setBounds(64, 236, 207, 14);
 		contentPane.add(lblCdigoDoCliente);
 		
 		txtCpfPesquisa = new JTextField();
-		txtCpfPesquisa = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-		txtCpfPesquisa.setBounds(190, 69, 116, 20);
-		contentPane.add(txtCpfPesquisa);
-		txtCpfPesquisa.setColumns(10);
-		
-		JLabel lblReservarFilme = new JLabel("Reservar Filme");
-		lblReservarFilme.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblReservarFilme.setForeground(Color.WHITE);
-		lblReservarFilme.setBounds(250, 11, 166, 32);
-		contentPane.add(lblReservarFilme);
+		txtCpfPesquisa_1 = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+		txtCpfPesquisa_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtCpfPesquisa_1.setBounds(229, 233, 225, 20);
+		contentPane.add(txtCpfPesquisa_1);
+		txtCpfPesquisa_1.setColumns(10);
 		
 		JLabel lblCdigoFilme = new JLabel("C\u00F3digo filme:");
-		lblCdigoFilme.setBounds(751, 72, 110, 14);
+		lblCdigoFilme.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCdigoFilme.setBounds(751, 238, 110, 14);
 		contentPane.add(lblCdigoFilme);
 		
 		txtCodFilme = new JTextField();
-		txtCodFilme.setBounds(871, 69, 141, 20);
+		txtCodFilme.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtCodFilme.setBounds(871, 235, 141, 20);
 		contentPane.add(txtCodFilme);
 		txtCodFilme.setColumns(10);
 		
 		lbNome = new JLabel("");
+		lbNome.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lbNome.setForeground(Color.GRAY);
-		lbNome.setBounds(158, 215, 242, 14);
+		lbNome.setBounds(229, 347, 227, 14);
 		contentPane.add(lbNome);
 		
 		lbEmail = new JLabel("");
+		lbEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lbEmail.setForeground(Color.GRAY);
-		lbEmail.setBounds(158, 308, 242, 14);
+		lbEmail.setBounds(229, 446, 225, 14);
 		contentPane.add(lbEmail);
 		
 		lbNumCarterinha = new JLabel("");
+		lbNumCarterinha.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lbNumCarterinha.setForeground(Color.GRAY);
-		lbNumCarterinha.setBounds(158, 153, 242, 14);
+		lbNumCarterinha.setBounds(229, 308, 225, 14);
 		contentPane.add(lbNumCarterinha);
 		
 		lbDataNasc = new JLabel("");
+		lbDataNasc.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lbDataNasc.setForeground(Color.GRAY);
-		lbDataNasc.setBounds(158, 261, 242, 14);
+		lbDataNasc.setBounds(229, 398, 225, 14);
 		contentPane.add(lbDataNasc);
 		
 		JButton btnProcurarClienteReserva = new JButton("");
@@ -159,67 +167,75 @@ public class TelaReserva extends TelaConsulta {
 				}
 			}
 		});
-		btnProcurarClienteReserva.setBounds(311, 68, 40, 23);
+		btnProcurarClienteReserva.setBounds(464, 232, 40, 23);
 		contentPane.add(btnProcurarClienteReserva);
 		
 		lblNome = new JLabel("Nome:");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNome.setBounds(64, 215, 70, 14);
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNome.setBounds(64, 347, 70, 14);
 		contentPane.add(lblNome);
 		
 		lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblEmail.setBounds(64, 308, 70, 14);
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblEmail.setBounds(64, 446, 70, 14);
 		contentPane.add(lblEmail);
 		
 		lblNCarterinha = new JLabel("N\u00BA Carterinha:");
-		lblNCarterinha.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNCarterinha.setBounds(64, 153, 116, 14);
+		lblNCarterinha.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNCarterinha.setBounds(64, 308, 159, 14);
 		contentPane.add(lblNCarterinha);
 		
 		lblDataNasc = new JLabel("Data Nasc:");
-		lblDataNasc.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDataNasc.setBounds(64, 261, 84, 14);
+		lblDataNasc.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDataNasc.setBounds(64, 398, 130, 14);
 		contentPane.add(lblDataNasc);
 		
 		lblTitulo = new JLabel("Titulo:");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTitulo.setBounds(751, 153, 75, 14);
+		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblTitulo.setBounds(751, 308, 75, 14);
 		contentPane.add(lblTitulo);
 		
 		lblGnero = new JLabel("G\u00EAnero:");
-		lblGnero.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblGnero.setBounds(751, 261, 75, 14);
+		lblGnero.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblGnero.setBounds(751, 446, 75, 14);
 		contentPane.add(lblGnero);
 		
 		lblDiretor = new JLabel("Diretor:");
-		lblDiretor.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDiretor.setBounds(751, 196, 75, 14);
+		lblDiretor.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblDiretor.setBounds(751, 347, 75, 14);
 		contentPane.add(lblDiretor);
 		
 		lblAno = new JLabel("Ano:");
-		lblAno.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblAno.setBounds(751, 234, 46, 14);
+		lblAno.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblAno.setBounds(751, 398, 46, 14);
 		contentPane.add(lblAno);
 		
 		lbTituloFilme = new JLabel("");
-		lbTituloFilme.setBounds(836, 153, 176, 14);
+		lbTituloFilme.setForeground(Color.GRAY);
+		lbTituloFilme.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbTituloFilme.setBounds(871, 308, 141, 14);
 		contentPane.add(lbTituloFilme);
 		
 		lbDiretorFilme = new JLabel("");
-		lbDiretorFilme.setBounds(836, 197, 176, 14);
+		lbDiretorFilme.setForeground(Color.GRAY);
+		lbDiretorFilme.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbDiretorFilme.setBounds(871, 347, 141, 14);
 		contentPane.add(lbDiretorFilme);
 		
 		final JLabel lbAnoFilme = new JLabel("");
-		lbAnoFilme.setBounds(836, 235, 176, 14);
+		lbAnoFilme.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbAnoFilme.setForeground(Color.GRAY);
+		lbAnoFilme.setBounds(871, 398, 141, 14);
 		contentPane.add(lbAnoFilme);
 		
 		final JLabel lbGeneroFilme = new JLabel("");
-		lbGeneroFilme.setBounds(836, 261, 176, 14);
+		lbGeneroFilme.setForeground(Color.GRAY);
+		lbGeneroFilme.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbGeneroFilme.setBounds(871, 446, 141, 14);
 		contentPane.add(lbGeneroFilme);
 		
 		btnProcurarFilmeReserva = new JButton("");
-		btnProcurarFilmeReserva.setIcon(new ImageIcon(TelaReserva.class.getResource("/br/tcc/sbtk/imagens/find-icon.png")));
+		btnProcurarFilmeReserva.setIcon(new ImageIcon(TelaReserva.class.getResource("/br/edu/fatec/icons/zoom.png")));
 		btnProcurarFilmeReserva.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				List<Filme> filmes  = (List<Filme>) consultaBD(txtCodFilme.getText(), 1);
@@ -231,9 +247,15 @@ public class TelaReserva extends TelaConsulta {
 					lbAnoFilme.setText(filme.getAno());
 					lbGeneroFilme.setText(filme.getGenero());
 					
+					if((lbNome.getText().equals("")) && (lbTituloFilme.getText().equals(""))){
+						btnReservar.setEnabled(false);
+					} else {
+						btnReservar.setEnabled(true);
+					}
 					if(filme.getReservado().equals("S")){
 						JOptionPane.showMessageDialog(null, "Filme já Reservado!");
 						//TODO setar o botão fazer reserva como desabilitado
+						btnReservar.setEnabled(false);
 					}
 					
 				} else {
@@ -243,10 +265,13 @@ public class TelaReserva extends TelaConsulta {
 			
 			}
 		});
-		btnProcurarFilmeReserva.setBounds(1022, 68, 89, 23);
+		btnProcurarFilmeReserva.setBounds(1018, 232, 46, 23);
 		contentPane.add(btnProcurarFilmeReserva);
 		
-		JButton btnReservar = new JButton("Reservar");
+		btnReservar = new JButton("Reservar");
+		btnReservar.setIcon(new ImageIcon(TelaReserva.class.getResource("/br/edu/fatec/icons/accept.png")));
+		btnReservar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnReservar.setEnabled(false);
 		btnReservar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -254,16 +279,54 @@ public class TelaReserva extends TelaConsulta {
 				
 				try {
 					ReservaDAO dao = new ReservaDAO();
+					filme.setReservado("S");
 					dao.salvar(cliente, filme);
+					FilmeDAO dao2 = new FilmeDAO();
+					dao2.alterar(filme);
+				JOptionPane.showMessageDialog(null, "Reservado com sucesso!");
 					
 				} catch (Exception e) {
+					filme.setReservado("N");
 					e.printStackTrace();
 				}
 				
 				
 			}
 		});
-		btnReservar.setBounds(865, 622, 89, 23);
+		btnReservar.setBounds(1108, 657, 199, 58);
 		contentPane.add(btnReservar);
+		
+		JLabel lblReservarFilme = new JLabel("RESERVAR FILME");
+		lblReservarFilme.setBounds(588, 23, 209, 20);
+		contentPane.add(lblReservarFilme);
+		lblReservarFilme.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblReservarFilme.setForeground(Color.WHITE);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 1366, 84);
+		panel.setBackground(new Color(1, 162, 237));
+		contentPane.add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBorder(BorderFactory.createTitledBorder("Cliente"));
+		panel_1.setBounds(24, 177, 597, 326);
+		contentPane.add(panel_1);
+		
+		panel_2 = new JPanel();
+		panel_2.setBorder(BorderFactory.createTitledBorder("Filme"));
+		panel_2.setBounds(710, 177, 597, 326);
+		contentPane.add(panel_2);
+		
+		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		button.setIcon(new ImageIcon(TelaReserva.class.getResource("/br/edu/fatec/icons/arrow_left.png")));
+		button.setBounds(24, 692, 89, 23);
+		contentPane.add(button);
+		
+	
 	}
 }

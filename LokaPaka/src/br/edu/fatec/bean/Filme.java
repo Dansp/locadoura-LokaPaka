@@ -20,6 +20,7 @@ public class Filme {
 		this.ano 		= ano;
 		this.genero 	= genero;
 		this.reservado 	= reservado;
+
 	}
 
 	public String getCodFilme(){
@@ -69,7 +70,4 @@ public class Filme {
 	public void setReservado(String reservado) {
 		this.reservado = reservado;
 	}
-	
-	
-
 }

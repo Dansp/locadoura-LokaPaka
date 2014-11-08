@@ -97,11 +97,12 @@ public class TelaLogin extends JFrame {
 		contentPane.add(passwordField);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.CYAN);
+		panel.setBackground(new Color(1, 162, 237));
 		panel.setBounds(0, 0, 370, 36);
 		contentPane.add(panel);
 		
 		JLabel lblBemVindoAo = new JLabel("BEM VINDO AO SISTEMA LOKAPAKA");
+		lblBemVindoAo.setForeground(Color.WHITE);
 		lblBemVindoAo.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panel.add(lblBemVindoAo);
 		

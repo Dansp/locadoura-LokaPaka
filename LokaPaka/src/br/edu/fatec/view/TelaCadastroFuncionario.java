@@ -147,11 +147,12 @@ public class TelaCadastroFuncionario extends JFrame {
 	
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.CYAN);
+		panel.setBackground(new Color(1, 162, 237));
 		panel.setBounds(0, 0, 288, 38);
 		contentPane.add(panel);
 		
-		JLabel lblNovoCadastro = new JLabel("Novo Cadastro");
+		JLabel lblNovoCadastro = new JLabel("NOVO CADASTRO");
+		lblNovoCadastro.setForeground(Color.WHITE);
 		panel.add(lblNovoCadastro);
 		lblNovoCadastro.setFont(new Font("Tahoma", Font.BOLD, 16));
 		

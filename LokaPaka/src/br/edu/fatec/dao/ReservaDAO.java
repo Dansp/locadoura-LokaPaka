@@ -31,14 +31,15 @@ public class ReservaDAO {
 			throw new Exception("O valor passado nao pode ser nulo");
 		
 		try {
-			String SQL = "INSERT INTO reserva (idfilme, idCliente) values(?, ?)"; 
+			String SQL = "INSERT INTO reserva (idfilme, idCliente, reservado) values(?, ?, ?)"; 
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			
 			ps.setString(1, filme.getCodFilme());
 			ps.setString(2, cliente.getNumCarterinha());
+			ps.setString(3, filme.getReservado());
 			//coloca o situação do filme como reservado
-			filme.setReservado("S");
+			
 			// salva no banco de dados
 			ps.executeUpdate();
 			
