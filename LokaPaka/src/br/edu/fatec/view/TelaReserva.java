@@ -30,8 +30,7 @@ public class TelaReserva extends TelaConsulta {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtCpfPesquisa;
-	private JTextField txtCpfPesquisa_1;
+	private JFormattedTextField txtCpfPesquisa;
 	private JTextField txtCodFilme;
 	private JLabel lbNumCarterinha;
 	private JLabel lbDataNasc;
@@ -87,12 +86,12 @@ public class TelaReserva extends TelaConsulta {
 		lblCdigoDoCliente.setBounds(64, 236, 207, 14);
 		contentPane.add(lblCdigoDoCliente);
 		
-		txtCpfPesquisa = new JTextField();
-		txtCpfPesquisa_1 = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-		txtCpfPesquisa_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		txtCpfPesquisa_1.setBounds(229, 233, 225, 20);
-		contentPane.add(txtCpfPesquisa_1);
-		txtCpfPesquisa_1.setColumns(10);
+		
+		txtCpfPesquisa = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+		txtCpfPesquisa.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtCpfPesquisa.setBounds(229, 233, 225, 20);
+		contentPane.add(txtCpfPesquisa);
+		txtCpfPesquisa.setColumns(10);
 		
 		JLabel lblCdigoFilme = new JLabel("C\u00F3digo filme:");
 		lblCdigoFilme.setFont(new Font("Tahoma", Font.PLAIN, 16));
