@@ -157,7 +157,12 @@ public class MainLayout extends JFrame {
 		mnNewMenu_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				new TelaLocacao().setVisible(true);
+				try {
+					new TelaLocacao().setVisible(true);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		menuBar.add(mnNewMenu_3);
