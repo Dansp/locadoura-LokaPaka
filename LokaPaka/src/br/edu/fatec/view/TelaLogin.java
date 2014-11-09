@@ -6,8 +6,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,37 +17,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import br.edu.fatec.bean.Funcionario;
+import br.edu.fatec.bean.Gerente;
 import br.edu.fatec.dao.FuncionarioDAO;
-
-
-
-
-import br.edu.fatec.util.SetaTamanhoTela;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.ParseException;
-
-import javax.swing.SwingConstants;
-
-import java.awt.FlowLayout;
-
-import javax.swing.ImageIcon;
-import javax.swing.UIManager;
-
-import java.awt.event.MouseMotionAdapter;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
+import br.edu.fatec.util.LimpaCampos;
 
 public class TelaLogin extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtLogin;
 	private JPasswordField passwordField;
@@ -120,33 +106,40 @@ public class TelaLogin extends JFrame {
 					funcionario.setEmail(txtLogin.getText());
 					funcionario.setPassworld(passwordField.getText());
 					FuncionarioDAO dao = new FuncionarioDAO();
-		
-					funcionario = dao.consultar(funcionario);
+					Gerente gerente = new Gerente();
 					
-							
-						new MainLayout().setVisible(true);
-						dispose();
+					gerente = (Gerente) dao.consultar(funcionario);
+						
+					
+					MainLayout main = new MainLayout();
+					main.setTipoFunc(gerente.getTipo());
+					main.setVisible(true);
+					dispose();
 					
 
 					JOptionPane.showMessageDialog(null, "Login Efetuado com sucesso!!!");
 				} catch (Exception ex) {
-					// limpa os campos
-					for (int i = 0; i < getContentPane().getComponentCount(); i++) {
-						// varre todos os componentes
-
-						Component c = getContentPane().getComponent(i);
-
-						if (c instanceof JTextField) {
-							// apaga os valores
-							JTextField field = (JTextField) c;
-							field.setText("");
-						}
-					}
+//					// limpa os campos
+//					for (int i = 0; i < getContentPane().getComponentCount(); i++) {
+//						// varre todos os componentes
+//
+//						Component c = getContentPane().getComponent(i);
+//
+//						if (c instanceof JTextField) {
+//							// apaga os valores
+//							JTextField field = (JTextField) c;
+//							field.setText("");
+//						}
+//					}
+					
+					new LimpaCampos(TelaLogin.this);
 				
 					JOptionPane.showMessageDialog(null, "Login inválida. Digite novamente");
 
 				}
 			}
+
+			
 		});
 		btnEntrar.setBounds(148, 117, 89, 23);
 		contentPane.add(btnEntrar);
@@ -197,4 +190,6 @@ public class TelaLogin extends JFrame {
 		lblCriarLogin.setForeground(Color.WHITE);
 		panel_criarLogin.add(lblCriarLogin);
 	}
+
+	
 }

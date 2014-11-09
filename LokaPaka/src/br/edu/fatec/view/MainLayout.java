@@ -24,7 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import br.edu.fatec.bean.Gerente;
 import br.edu.fatec.util.SetaTamanhoTela;
+
 import java.awt.Font;
 
 public class MainLayout extends JFrame {
@@ -40,6 +42,8 @@ public class MainLayout extends JFrame {
     private int   currentSecond;
     private Calendar calendar;
     private JLabel text_clock = new JLabel();
+	private JMenu mnGerarRelatrio;
+	private int tipo;
 
 	/**
 	 * Launch the application.
@@ -56,6 +60,13 @@ public class MainLayout extends JFrame {
 			}
 		});
 	}
+	
+	public void setTipoFunc(int tipo){
+		if(tipo == Gerente.COD_GERENTE){
+			mnGerarRelatrio.setEnabled(true);
+		}
+		
+	}
 
 	/**
 	 * Create the frame.
@@ -67,6 +78,8 @@ public class MainLayout extends JFrame {
 		setTitle("Lokapaka");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, x, y);
+		
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -140,7 +153,7 @@ public class MainLayout extends JFrame {
 		});
 		menuBar.add(mnNewMenu_2);
 		
-		JMenu mnNewMenu_3 = new JMenu("Ajuda");
+		JMenu mnNewMenu_3 = new JMenu("Loca\u00E7\u00E3o");
 		menuBar.add(mnNewMenu_3);
 		
 		JMenu mnNewMenu_4 = new JMenu("logoff");
@@ -152,6 +165,10 @@ public class MainLayout extends JFrame {
 				new TelaLogin().setVisible(true);
 			}
 		});
+		
+		mnGerarRelatrio = new JMenu("Gerar Relat\u00F3rio");
+		mnGerarRelatrio.setEnabled(false);
+		menuBar.add(mnGerarRelatrio);
 		menuBar.add(mnNewMenu_4);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -189,8 +206,10 @@ public class MainLayout extends JFrame {
 		
 		setResizable(false);
 	}
-	
-	 private void reset(){
+
+
+
+	private void reset(){
 	        calendar = Calendar.getInstance();
 	        currentSecond = calendar.get(Calendar.SECOND);
 	    }

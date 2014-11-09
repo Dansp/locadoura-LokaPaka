@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import br.edu.fatec.bean.Funcionario;
-
+import br.edu.fatec.bean.Gerente;
 import br.edu.fatec.util.ConnectionFactory;
 
 public class FuncionarioDAO {
@@ -22,18 +22,20 @@ public class FuncionarioDAO {
 		}
 	}
 	
-	public void salvar(Funcionario funcionario) throws Exception {
+	public void salvar(Funcionario funcionario, int tipo) throws Exception {
 		PreparedStatement ps = null;
 		Connection conn = null;
 		if (funcionario == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
-			String SQL = "INSERT INTO funcionario (userName, senha, email) values (?, ?, ?)";
+			String SQL = "INSERT INTO funcionario (userName, senha, email, codGerente) values (?, ?, ?, ?)";
 			conn = this.comn;
+
 			ps = conn.prepareStatement(SQL);
 			ps.setString(1, funcionario.getUserName());
 			ps.setString(2, funcionario.getPassworld());
 			ps.setString(3, funcionario.getEmail());
+			ps.setInt(4, tipo);
 		
 			// salve in Data Base
 			ps.executeUpdate();
@@ -45,27 +47,31 @@ public class FuncionarioDAO {
 		}
 	}
 	
-	public Funcionario consultar(Funcionario funcionario) throws Exception {
+	public Funcionario consultar(Funcionario func) throws Exception {
 		PreparedStatement ps = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		if (funcionario == null)
+		if (func == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		try {
 			String SQL = "SELECT * from funcionario where userName = ? or email = ? and senha = ? ";
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
-			ps.setString(1, funcionario.getUserName());
-			ps.setString(2, funcionario.getEmail());
-			ps.setString(3, funcionario.getPassworld());
+			ps.setString(1, func.getUserName());
+			ps.setString(2, func.getEmail());
+			ps.setString(3, func.getPassworld());
 			rs = ps.executeQuery();
 			rs.next();
-			funcionario.setUserName(rs.getString("userName"));
-			funcionario.setEmail(rs.getString("email"));
-			funcionario.setPassworld(rs.getString("senha"));
 			
+			Gerente gerente = new Gerente();
+			gerente.setTipo(rs.getInt("codGerente"));
+			
+			gerente.setUserName(rs.getString("userName"));
+			gerente.setEmail(rs.getString("email"));
+			gerente.setPassworld(rs.getString("senha"));
+				
+			return gerente;
 
-			return funcionario;
 		} catch (SQLException sqle) {
 			throw new Exception("Erro ao inserir dados " + sqle);
 		} finally {

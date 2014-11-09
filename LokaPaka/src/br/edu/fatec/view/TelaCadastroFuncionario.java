@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,20 +20,30 @@ import javax.swing.plaf.ToolTipUI;
 import javax.swing.plaf.metal.MetalBorders;
 
 import br.edu.fatec.bean.Funcionario;
+import br.edu.fatec.bean.Gerente;
 import br.edu.fatec.dao.FuncionarioDAO;
 import br.edu.fatec.util.Cryptography;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class TelaCadastroFuncionario extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUserName;
 	private JTextField txtEmail;
 	private JPasswordField passwordField01Func;
 	private JPasswordField passwordField02Func;
+	private JComboBox<?> comboBox;
 
 	/**
 	 * Launch the application.
@@ -55,35 +66,39 @@ public class TelaCadastroFuncionario extends JFrame {
 	 */
 	public TelaCadastroFuncionario() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 304, 302);
+		setBounds(100, 100, 437, 304);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(21, 100, 46, 14);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblEmail.setBounds(21, 100, 140, 14);
 		contentPane.add(lblEmail);
 		
 		JLabel lblUsername = new JLabel("Nome de Usu\u00E1rio");
-		lblUsername.setBounds(21, 62, 105, 14);
+		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUsername.setBounds(21, 62, 140, 14);
 		contentPane.add(lblUsername);
 		
 		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(21, 136, 46, 14);
+		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblSenha.setBounds(21, 136, 140, 14);
 		contentPane.add(lblSenha);
 		
 		JLabel lblRepetirSenha = new JLabel("Repetir Senha:");
-		lblRepetirSenha.setBounds(21, 161, 76, 14);
+		lblRepetirSenha.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblRepetirSenha.setBounds(21, 161, 140, 14);
 		contentPane.add(lblRepetirSenha);
 		
 		txtUserName = new JTextField();
-		txtUserName.setBounds(136, 59, 86, 20);
+		txtUserName.setBounds(171, 61, 217, 20);
 		contentPane.add(txtUserName);
 		txtUserName.setColumns(10);
 		
 		txtEmail = new JTextField();
-		txtEmail.setBounds(135, 97, 86, 20);
+		txtEmail.setBounds(172, 97, 217, 20);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 		
@@ -102,9 +117,12 @@ public class TelaCadastroFuncionario extends JFrame {
 						
 			
 					FuncionarioDAO dao = new FuncionarioDAO();
-					
-					//salve in DB Mysql
-					dao.salvar(funcionario);
+					if(comboBox.getSelectedIndex() == 0){
+						//salve in DB Mysql
+						dao.salvar(funcionario, Gerente.COD_FUNCIONARIO);
+					} else {
+						dao.salvar(funcionario, Gerente.COD_GERENTE);
+					}
 					JOptionPane.showMessageDialog(null, "Gravado com sucesso");
 					dispose();
 					new TelaLogin().setVisible(true);
@@ -114,11 +132,11 @@ public class TelaCadastroFuncionario extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(136, 213, 117, 23);
+		btnCadastrar.setBounds(271, 213, 117, 23);
 		contentPane.add(btnCadastrar);
 		
 		passwordField01Func = new JPasswordField();
-		passwordField01Func.setBounds(135, 133, 86, 20);
+		passwordField01Func.setBounds(171, 133, 217, 20);
 		contentPane.add(passwordField01Func);
 		
 		passwordField02Func = new JPasswordField();
@@ -141,14 +159,14 @@ public class TelaCadastroFuncionario extends JFrame {
 				}
 			}
 		});
-		passwordField02Func.setBounds(135, 158, 86, 20);
+		passwordField02Func.setBounds(171, 160, 217, 20);
 		contentPane.add(passwordField02Func);
 		
 	
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(1, 162, 237));
-		panel.setBounds(0, 0, 288, 38);
+		panel.setBounds(0, 0, 421, 38);
 		contentPane.add(panel);
 		
 		JLabel lblNovoCadastro = new JLabel("NOVO CADASTRO");
@@ -164,8 +182,12 @@ public class TelaCadastroFuncionario extends JFrame {
 				new TelaLogin().setVisible(true);
 			}
 		});
-		btnVoltar.setBounds(21, 213, 89, 23);
+		btnVoltar.setBounds(171, 213, 89, 23);
 		contentPane.add(btnVoltar);
+		
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Funcion\u00E1rio", "Gerente"}));
+		comboBox.setBounds(21, 214, 96, 20);
+		contentPane.add(comboBox);
 	}
-
 }
