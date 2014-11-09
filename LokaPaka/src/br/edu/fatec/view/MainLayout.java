@@ -154,6 +154,12 @@ public class MainLayout extends JFrame {
 		menuBar.add(mnNewMenu_2);
 		
 		JMenu mnNewMenu_3 = new JMenu("Loca\u00E7\u00E3o");
+		mnNewMenu_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				new TelaLocacao().setVisible(true);
+			}
+		});
 		menuBar.add(mnNewMenu_3);
 		
 		JMenu mnNewMenu_4 = new JMenu("logoff");
