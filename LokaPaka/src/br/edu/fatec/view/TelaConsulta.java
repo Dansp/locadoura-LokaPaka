@@ -290,9 +290,14 @@ public class TelaConsulta extends JFrame {
 			try {
 				List<Cliente> clientes = new ArrayList<Cliente>();
 				Cliente cliente = new Cliente();
-				cliente.setCpf(texto);
+				if (texto.isEmpty()){
+					cliente.setCpf(textFieldPesquisa.getText());
+					cliente.setNumCarterinha(textFieldPesquisa.getText());
+				} else {
+					cliente.setCpf(texto);
+					cliente.setNumCarterinha(texto);
+				}
 				cliente.setNomeCliente(textFieldPesquisa.getText());
-				cliente.setNumCarterinha(textFieldPesquisa.getText());
 				cliente.setUf(comboBox.getSelectedItem().toString());
 				ClienteDAO dao = new ClienteDAO();
 

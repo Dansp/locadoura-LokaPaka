@@ -8,11 +8,11 @@ import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
 import br.edu.fatec.util.ConnectionFactory;
 
-public class ReservaDAO {
+public class LocacaoDAO {
 
 	private Connection comn;
 	
-	public ReservaDAO() throws Exception{
+	public LocacaoDAO() throws Exception{
 		// chama a classe ConnectionFactory e estabele uma conexao
 		try {
 			comn = ConnectionFactory.getConnection();
@@ -24,14 +24,14 @@ public class ReservaDAO {
 	
 	
 	
-	public void salvar(Cliente cliente, Filme filme) throws Exception{
+	public void locar(Cliente cliente, Filme filme) throws Exception{
 		PreparedStatement ps = null;
 		Connection conn = null;
 		if (cliente == null && filme == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		
 		try {
-			String SQL = "INSERT INTO reserva (idfilme, idCliente, reservado) values(?, ?, ?)"; 
+			String SQL = "INSERT INTO locacao (idfilme, idCliente, reservado) values(?, ?, ?)"; 
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			
@@ -48,5 +48,10 @@ public class ReservaDAO {
 		} finally{
 			ConnectionFactory.closeConnection(conn, ps);
 		}
+	}
+	
+	
+	public void devolver(){
+		
 	}
 }
