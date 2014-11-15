@@ -1,13 +1,14 @@
 package br.edu.fatec.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.NumericShaper;
-import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -18,23 +19,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
-import javax.swing.text.PlainDocument;
 
 import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.dao.ClienteDAO;
+import br.edu.fatec.util.Dispatcher;
+import br.edu.fatec.util.Listener;
 import br.edu.fatec.util.NumericAndLengthFilter;
 
-import javax.swing.JPanel;
-
-import java.awt.Font;
-import java.awt.Color;
-
-public class TelaCadastroCliente extends JFrame {
+public class TelaCadastroCliente extends JFrame implements Listener {
 
 	private JLayeredPane contentPane;
 	private JTextField txtCarterinha;
@@ -52,6 +49,7 @@ public class TelaCadastroCliente extends JFrame {
 	private JTextField txtEmail;
 	private JComboBox comboBoxUF;
 	private JLabel labelRealizarCadastro;
+	private Cliente cliente;
 
 	/**
 	 * Launch the application.
@@ -68,6 +66,7 @@ public class TelaCadastroCliente extends JFrame {
 			}
 		});
 	}
+	
 
 	/**
 	 * Create the frame.
@@ -216,6 +215,7 @@ public class TelaCadastroCliente extends JFrame {
 		btnCadastrar.setToolTipText("Cadastrar Cliente");
 		btnCadastrar.setBounds(485, 346, 117, 24);
 		btnCadastrar.addActionListener(new ActionListener() {
+		
 			public void actionPerformed(ActionEvent arg0) {
 
 				// procurar por uma classe no projeto
@@ -244,11 +244,13 @@ public class TelaCadastroCliente extends JFrame {
 					ClienteDAO dao = new ClienteDAO();
 
 					dao.salvar(cliente);
-					txtCarterinha.setText(cliente.getNumCarterinha());
-					System.out.println(cliente.getNumCarterinha());
+					
+					
 					labelRealizarCadastro.setText("Cadastrado com sucesso!");
 					labelRealizarCadastro.setForeground(Color.green);
-				
+					
+					setCliente(cliente);
+					
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, "Não é possível fazer o cadastro, tente novamente");
 
@@ -265,6 +267,26 @@ public class TelaCadastroCliente extends JFrame {
 		btnSair.setBounds(358, 346, 117, 25);
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				ClienteDAO dao;
+				try {
+					dao = new ClienteDAO();
+					
+					List<Cliente> clientes = dao.consultar(getCliente());
+					cliente = clientes.get(0);
+					txtCarterinha.setText(cliente.getNumCarterinha());
+					System.out.println(cliente.getNumCarterinha());
+					
+					Dispatcher.getInstance().dispatcherCliente(cliente);
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
 				dispose();
 			}
 		});
@@ -313,5 +335,19 @@ public class TelaCadastroCliente extends JFrame {
 		contentPane.add(labelRealizarCadastro);
 		
 		setResizable(true);
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	@Override
+	public void onClienteCadastrado(Cliente cliente) {
+		cliente = getCliente();
+		
 	}
 }

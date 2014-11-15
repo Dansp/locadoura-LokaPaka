@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
+import br.edu.fatec.bean.Locacao;
 import br.edu.fatec.util.ConnectionFactory;
 
 public class LocacaoDAO {
@@ -24,20 +25,33 @@ public class LocacaoDAO {
 	
 	
 	
-	public void locar(Cliente cliente, Filme filme) throws Exception{
+	public void locar(Locacao locacao) throws Exception{
 		PreparedStatement ps = null;
 		Connection conn = null;
-		if (cliente == null && filme == null)
+		if (locacao == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		
 		try {
-			String SQL = "INSERT INTO locacao (idfilme, idCliente, reservado) values(?, ?, ?)"; 
+			String SQL = "INSERT INTO locacao (idfilme, idFunc, numCarterinha, dataLocacao, "
+					+ "dataDevolucao, dataDevRealizada) values(?, ?, ?, ?, ?, ?)"; 
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			
-			ps.setString(1, filme.getCodFilme());
-			ps.setString(2, cliente.getNumCarterinha());
-			ps.setString(3, filme.getReservado());
+			/*
+			ps.setString(1, locacao.getCodFilme());
+			ps.setString(2, locacao.getCodFuncionario());
+			ps.setString(3, locacao.getNumCarterinha());
+			ps.setString(4, locacao.getDataLocacao());
+			ps.setString(5, locacao.getDataDevolucao());
+			ps.setString(6, locacao.getDataDevRealizada());
+			*/
+			
+			ps.setInt(1, Integer.parseInt(locacao.getCodFilme()));
+			ps.setInt(2, Integer.parseInt(locacao.getCodFuncionario()));
+			ps.setInt(3, Integer.parseInt(locacao.getNumCarterinha()));
+			ps.setString(4, locacao.getDataLocacao());
+			ps.setString(5, locacao.getDataDevolucao());
+			ps.setString(6, locacao.getDataDevRealizada());
 			//coloca o situação do filme como reservado
 			
 			// salva no banco de dados

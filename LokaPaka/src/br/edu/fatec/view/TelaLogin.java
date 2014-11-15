@@ -112,7 +112,7 @@ public class TelaLogin extends JFrame {
 						
 					
 					MainLayout main = new MainLayout();
-					main.setTipoFunc(gerente.getTipo());
+					main.setTipoFunc(gerente);
 					main.setVisible(true);
 					dispose();
 					

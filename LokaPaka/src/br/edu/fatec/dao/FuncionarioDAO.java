@@ -12,7 +12,7 @@ import br.edu.fatec.util.ConnectionFactory;
 public class FuncionarioDAO {
 	private Connection comn;
 	private Funcionario funcionario;
-	
+
 	public FuncionarioDAO() throws Exception {
 		// chama a classe ConnectionFactory e estabele uma conexao
 		try {
@@ -21,7 +21,7 @@ public class FuncionarioDAO {
 			throw new Exception("erro: \n" + e.getMessage());
 		}
 	}
-	
+
 	public void salvar(Funcionario funcionario, int tipo) throws Exception {
 		PreparedStatement ps = null;
 		Connection conn = null;
@@ -36,7 +36,7 @@ public class FuncionarioDAO {
 			ps.setString(2, funcionario.getPassworld());
 			ps.setString(3, funcionario.getEmail());
 			ps.setInt(4, tipo);
-		
+
 			// salve in Data Base
 			ps.executeUpdate();
 
@@ -46,7 +46,7 @@ public class FuncionarioDAO {
 			ConnectionFactory.closeConnection(conn, ps);
 		}
 	}
-	
+
 	public Funcionario consultar(Funcionario func) throws Exception {
 		PreparedStatement ps = null;
 		Connection conn = null;
@@ -61,17 +61,18 @@ public class FuncionarioDAO {
 			ps.setString(2, func.getEmail());
 			ps.setString(3, func.getPassworld());
 			rs = ps.executeQuery();
-			rs.next();
-			
-			Gerente gerente = new Gerente();
-			gerente.setTipo(rs.getInt("codGerente"));
-			
-			gerente.setUserName(rs.getString("userName"));
-			gerente.setEmail(rs.getString("email"));
-			gerente.setPassworld(rs.getString("senha"));
-				
-			return gerente;
+			if (rs.next()) {
 
+				Gerente gerente = new Gerente();
+				gerente.setTipo(rs.getInt("codGerente"));
+				gerente.setCodFunc(rs.getString("idFunc"));
+				gerente.setUserName(rs.getString("userName"));
+				gerente.setEmail(rs.getString("email"));
+				gerente.setPassworld(rs.getString("senha"));
+
+				return gerente;
+			}
+			return null;
 		} catch (SQLException sqle) {
 			throw new Exception("Erro ao inserir dados " + sqle);
 		} finally {
@@ -79,6 +80,5 @@ public class FuncionarioDAO {
 		}
 
 	}
-	
 
 }

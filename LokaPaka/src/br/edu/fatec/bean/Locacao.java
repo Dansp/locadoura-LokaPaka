@@ -6,7 +6,6 @@ public class Locacao {
 	private String codFilme;
 	private String codFuncionario;
 	private String numCarterinha;
-	private String codReserva;
 	private String dataLocacao;
 	private String dataDevolucao;
 	private String dataDevRealizada;
@@ -17,14 +16,13 @@ public class Locacao {
 	
 	
 	public Locacao(String codLocacao, String codFilme, String codFuncionario,
-			String numCarterinha, String codReserva, String dataLocacao,
+			String numCarterinha, String dataLocacao,
 			String dataDevolucao, String dataDevRealizada) {
 		super();
 		this.codLocacao = codLocacao;
 		this.codFilme = codFilme;
 		this.codFuncionario = codFuncionario;
 		this.numCarterinha = numCarterinha;
-		this.codReserva = codReserva;
 		this.dataLocacao = dataLocacao;
 		this.dataDevolucao = dataDevolucao;
 		this.dataDevRealizada = dataDevRealizada;
@@ -53,12 +51,6 @@ public class Locacao {
 	}
 	public void setNumCarterinha(String numCarterinha) {
 		this.numCarterinha = numCarterinha;
-	}
-	public String getCodReserva() {
-		return codReserva;
-	}
-	public void setCodReserva(String codReserva) {
-		this.codReserva = codReserva;
 	}
 	public String getDataLocacao() {
 		return dataLocacao;

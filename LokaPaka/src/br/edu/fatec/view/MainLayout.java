@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import br.edu.fatec.bean.Funcionario;
 import br.edu.fatec.bean.Gerente;
 import br.edu.fatec.util.SetaTamanhoTela;
 
@@ -43,7 +44,8 @@ public class MainLayout extends JFrame {
     private Calendar calendar;
     private JLabel text_clock = new JLabel();
 	private JMenu mnGerarRelatrio;
-	private int tipo;
+	private Funcionario funcionario;
+	private JMenu mnMenuLocacao;
 
 	/**
 	 * Launch the application.
@@ -61,11 +63,15 @@ public class MainLayout extends JFrame {
 		});
 	}
 	
-	public void setTipoFunc(int tipo){
-		if(tipo == Gerente.COD_GERENTE){
+	public void setTipoFunc(Gerente tipo){
+		//if(tipo == Gerente.COD_GERENTE){
+			//mnGerarRelatrio.setEnabled(true);
+		//}
+		
+		if(tipo.getTipo() == Gerente.COD_GERENTE){
 			mnGerarRelatrio.setEnabled(true);
 		}
-		
+		funcionario = tipo;
 	}
 
 	/**
@@ -153,19 +159,21 @@ public class MainLayout extends JFrame {
 		});
 		menuBar.add(mnNewMenu_2);
 		
-		JMenu mnNewMenu_3 = new JMenu("Loca\u00E7\u00E3o");
-		mnNewMenu_3.addMouseListener(new MouseAdapter() {
+		mnMenuLocacao = new JMenu("Loca\u00E7\u00E3o");
+		mnMenuLocacao.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
-					new TelaLocacao().setVisible(true);
+					TelaLocacao telaLocacao = new TelaLocacao();
+					telaLocacao.setFuncionario(funcionario);
+					telaLocacao.setVisible(true);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		menuBar.add(mnNewMenu_3);
+		menuBar.add(mnMenuLocacao);
 		
 		JMenu mnNewMenu_4 = new JMenu("logoff");
 	

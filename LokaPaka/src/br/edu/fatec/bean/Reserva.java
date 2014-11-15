@@ -2,30 +2,32 @@ package br.edu.fatec.bean;
 
 public class Reserva {
 	
-	private String id;
+	private String idReserva;
 	private String id_cliente;
 	private String id_filme;
 	private String reservado;
 	
 	
-	
+	public Reserva() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	public Reserva(String id, String id_cliente, String id_filme,
 			String reservado) {
 		super();
-		this.id = id;
+		this.idReserva = id;
 		this.id_cliente = id_cliente;
 		this.id_filme = id_filme;
 		this.reservado = reservado;
 	}
 	
 	
-	public String getId() {
-		return id;
+	public String getIdReserva() {
+		return idReserva;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setIdReserva(String idReserva) {
+		this.idReserva = idReserva;
 	}
 	public String getId_cliente() {
 		return id_cliente;

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,6 +24,13 @@ import javax.swing.text.MaskFormatter;
 
 import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
+import br.edu.fatec.bean.Funcionario;
+import br.edu.fatec.bean.Locacao;
+import br.edu.fatec.bean.Reserva;
+import br.edu.fatec.dao.LocacaoDAO;
+import br.edu.fatec.dao.ReservaDAO;
+import br.edu.fatec.util.Dispatcher;
+import br.edu.fatec.util.Listener;
 
 public class TelaLocacao extends TelaConsulta {
 
@@ -34,6 +42,12 @@ public class TelaLocacao extends TelaConsulta {
 	private JTextField txtCodFilme;
 	private JLabel lblDataDevolucao;
 	private JLabel lbNome;
+	private JButton btnAlugar;
+	private Funcionario funcionario;
+	private JFormattedTextField txtCarterinha;
+	private Filme filme;
+	private Cliente cliente;
+	private JLabel lblDataAtual;
 
 	/**
 	 * Launch the application.
@@ -51,6 +65,13 @@ public class TelaLocacao extends TelaConsulta {
 		});
 	}
 
+	public void setFuncionario(Funcionario func){
+		funcionario = func;
+	}
+	
+	
+
+	
 	/**
 	 * Create the frame.
 	 * @throws ParseException 
@@ -108,30 +129,30 @@ public class TelaLocacao extends TelaConsulta {
 		final JLabel lbTitulo = new JLabel("");
 		lbTitulo.setForeground(Color.GRAY);
 		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbTitulo.setBounds(963, 271, 141, 14);
+		lbTitulo.setBounds(963, 271, 197, 14);
 		contentPane.add(lbTitulo);
 		
 		final JLabel lbDiretor = new JLabel("");
 		lbDiretor.setForeground(Color.GRAY);
 		lbDiretor.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbDiretor.setBounds(963, 310, 141, 14);
+		lbDiretor.setBounds(963, 310, 197, 14);
 		contentPane.add(lbDiretor);
 		
 		final JLabel lbAno = new JLabel("");
 		lbAno.setForeground(Color.GRAY);
 		lbAno.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbAno.setBounds(963, 361, 141, 14);
+		lbAno.setBounds(963, 361, 197, 14);
 		contentPane.add(lbAno);
 		
 		final JLabel lbGenero = new JLabel("");
 		lbGenero.setForeground(Color.GRAY);
 		lbGenero.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbGenero.setBounds(963, 409, 141, 14);
+		lbGenero.setBounds(963, 409, 197, 14);
 		contentPane.add(lbGenero);
 		
-		JButton button = new JButton("");
-		button.addActionListener(new ActionListener() {
-			private Filme filme;
+		JButton btnPesquisarFilme = new JButton("");
+		btnPesquisarFilme.addActionListener(new ActionListener() {
+			
 
 			public void actionPerformed(ActionEvent arg0) {
 				List<Filme> filmes  = (List<Filme>) consultaBD(txtCodFilme.getText(), 1);
@@ -144,14 +165,14 @@ public class TelaLocacao extends TelaConsulta {
 					lbGenero.setText(filme.getGenero());
 					
 					if((lbNome.getText().equals("")) && (lbTitulo.getText().equals(""))){
-						//btnReservar.setEnabled(false);
+						btnAlugar.setEnabled(false);
 					} else {
-						//btnReservar.setEnabled(true);
+						btnAlugar.setEnabled(true);
 					}
 					if(filme.getReservado().equals("S")){
 						JOptionPane.showMessageDialog(null, "Filme já Reservado!");
 						//TODO setar o botão fazer reserva como desabilitado
-						//btnReservar.setEnabled(false);
+						btnAlugar.setEnabled(false);
 					}
 					
 				} else {
@@ -160,16 +181,16 @@ public class TelaLocacao extends TelaConsulta {
 				}
 			}
 		});
-		button.setIcon(new ImageIcon(TelaLocacao.class.getResource("/br/edu/fatec/icons/zoom.png")));
-		button.setBounds(1114, 198, 46, 23);
-		contentPane.add(button);
+		btnPesquisarFilme.setIcon(new ImageIcon(TelaLocacao.class.getResource("/br/edu/fatec/icons/zoom.png")));
+		btnPesquisarFilme.setBounds(1114, 198, 46, 23);
+		contentPane.add(btnPesquisarFilme);
 		
 		JLabel label_9 = new JLabel("CPF do Cliente:");
 		label_9.setFont(new Font("Tahoma", Font.BOLD, 16));
 		label_9.setBounds(133, 271, 207, 14);
 		contentPane.add(label_9);
 		
-		final JFormattedTextField txtCarterinha = new JFormattedTextField();
+		txtCarterinha = new JFormattedTextField();
 		txtCarterinha.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		txtCarterinha.setColumns(10);
 		txtCarterinha.setBounds(298, 195, 225, 20);
@@ -178,30 +199,30 @@ public class TelaLocacao extends TelaConsulta {
 		lbNome = new JLabel("");
 		lbNome.setForeground(Color.GRAY);
 		lbNome.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbNome.setBounds(298, 309, 227, 14);
+		lbNome.setBounds(298, 309, 275, 14);
 		contentPane.add(lbNome);
 		
 		final JLabel lbEmail = new JLabel("");
 		lbEmail.setForeground(Color.GRAY);
 		lbEmail.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbEmail.setBounds(298, 408, 225, 14);
+		lbEmail.setBounds(298, 408, 275, 14);
 		contentPane.add(lbEmail);
 		
 		final JLabel lbCpf = new JLabel("");
 		lbCpf.setForeground(Color.GRAY);
 		lbCpf.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbCpf.setBounds(298, 270, 225, 14);
+		lbCpf.setBounds(298, 270, 275, 14);
 		contentPane.add(lbCpf);
 		
 		final JLabel lbDataNasc = new JLabel("");
 		lbDataNasc.setForeground(Color.GRAY);
 		lbDataNasc.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lbDataNasc.setBounds(298, 360, 225, 14);
+		lbDataNasc.setBounds(298, 360, 275, 14);
 		contentPane.add(lbDataNasc);
 		
-		JButton button_1 = new JButton("");
-		button_1.addActionListener(new ActionListener() {
-			private Cliente cliente;
+		JButton btnPesquisarCliente = new JButton("");
+		btnPesquisarCliente.addActionListener(new ActionListener() {
+			
 
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -219,7 +240,34 @@ public class TelaLocacao extends TelaConsulta {
 					int resposta = JOptionPane.showConfirmDialog(null, "Cliente não cadastrado. Deseja cadastrar?");
 					if (resposta == JOptionPane.YES_OPTION){
 						try {
-							new TelaCadastroCliente().setVisible(true);
+							Listener listener = new TelaCadastroCliente();
+							TelaCadastroCliente  t = (TelaCadastroCliente) listener;
+							t.setVisible(true);
+							
+							//Dispatcher.getInstance().
+							
+							Dispatcher.getInstance().addListener(new Listener() {
+
+								@Override
+								public void onClienteCadastrado(Cliente cliente) {
+									if(cliente != null){
+										txtCarterinha.setText(cliente.getNumCarterinha());
+										lbNome.setText(cliente.getNomeCliente());
+										lbCpf.setText(cliente.getCpf());
+										lbDataNasc.setText(cliente.getDataNasci());
+										lbEmail.setText(cliente.getEmail());
+									}
+								}
+								
+							});
+							
+							if(cliente != null){
+								txtCarterinha.setText(cliente.getNumCarterinha());
+								lbNome.setText(cliente.getNomeCliente());
+								lbCpf.setText(cliente.getCpf());
+								lbDataNasc.setText(cliente.getDataNasci());
+								lbEmail.setText(cliente.getEmail());
+							}
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -234,9 +282,9 @@ public class TelaLocacao extends TelaConsulta {
 				}
 			}
 		});
-		button_1.setIcon(new ImageIcon(TelaLocacao.class.getResource("/br/edu/fatec/icons/zoom.png")));
-		button_1.setBounds(533, 194, 40, 23);
-		contentPane.add(button_1);
+		btnPesquisarCliente.setIcon(new ImageIcon(TelaLocacao.class.getResource("/br/edu/fatec/icons/zoom.png")));
+		btnPesquisarCliente.setBounds(533, 194, 40, 23);
+		contentPane.add(btnPesquisarCliente);
 		
 		JLabel label_14 = new JLabel("Nome:");
 		label_14.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -258,10 +306,27 @@ public class TelaLocacao extends TelaConsulta {
 		label_17.setBounds(133, 360, 130, 14);
 		contentPane.add(label_17);
 		
-		JButton btnAlugar = new JButton("Confirmar");
+		btnAlugar = new JButton("Confirmar");
+		btnAlugar.setEnabled(false);
 		btnAlugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				Locacao locacao = new Locacao();
+				locacao.setCodFilme(txtCodFilme.getText());
+				locacao.setCodFuncionario(funcionario.getCodFunc());
+				locacao.setNumCarterinha(txtCarterinha.getText());
+				locacao.setDataLocacao(lblDataAtual.getText());
+				locacao.setDataDevolucao(lblDataDevolucao.getText());
+				
+				LocacaoDAO dao2;
+				try {
+					dao2 = new LocacaoDAO();
+					dao2.locar(locacao);
+					
+					JOptionPane.showMessageDialog(null, "Locação efetuada com sucesso!");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Não é possível fazer a locação");
+				}
 				
 			}
 		});
@@ -294,7 +359,7 @@ public class TelaLocacao extends TelaConsulta {
 		lblDataDevolucao.setBounds(891, 588, 159, 14);
 		contentPane.add(lblDataDevolucao);
 		
-		JLabel lblDataAtual = new JLabel(d);
+		lblDataAtual = new JLabel(d);
 		lblDataAtual.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblDataAtual.setBounds(891, 546, 85, 14);
 		contentPane.add(lblDataAtual);

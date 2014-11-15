@@ -274,7 +274,7 @@ public class TelaReserva extends TelaConsulta {
 				try {
 					ReservaDAO dao = new ReservaDAO();
 					filme.setReservado("S");
-					dao.salvar(cliente, filme);
+					dao.reservar(cliente, filme);
 					FilmeDAO dao2 = new FilmeDAO();
 					dao2.alterar(filme);
 				JOptionPane.showMessageDialog(null, "Reservado com sucesso!");
