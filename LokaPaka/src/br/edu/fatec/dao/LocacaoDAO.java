@@ -2,6 +2,7 @@ package br.edu.fatec.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import br.edu.fatec.bean.Cliente;
@@ -67,5 +68,43 @@ public class LocacaoDAO {
 	
 	public void devolver(){
 		
+	}
+	
+	public boolean consultar(Locacao locacao) throws Exception{
+		PreparedStatement ps = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		if(locacao == null)
+			throw new Exception("O valor passado nao pode ser nulo");
+		
+		Locacao locacao2 = null;
+		try{
+		conn = this.comn;
+		
+		String SQL = "SELECT * FROM locacao";
+		ps = conn.prepareStatement(SQL);
+		
+		rs = ps.executeQuery();
+		
+		while(rs.next()){
+			locacao2 = new Locacao(); 
+			locacao2.setCodFilme(rs.getString("idfilme"));
+			locacao2.setNumCarterinha(rs.getString("numCarterinha"));
+			
+		}
+		
+		if(locacao.getCodFilme().equals(locacao2.getCodFilme())){
+			return true;
+		} 
+		
+			
+		} catch(SQLException sqle){
+			throw new Exception("Erro ao inserir dados " + sqle);
+			
+		} finally {
+			ConnectionFactory.closeConnection(conn, ps);
+		}
+		
+		return false;
 	}
 }

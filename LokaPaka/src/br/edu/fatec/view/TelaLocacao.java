@@ -164,7 +164,7 @@ public class TelaLocacao extends TelaConsulta {
 					lbAno.setText(filme.getAno());
 					lbGenero.setText(filme.getGenero());
 					
-					if((lbNome.getText().equals("")) && (lbTitulo.getText().equals(""))){
+					if((lbNome.getText().equals("")) || (lbTitulo.getText().equals(""))){
 						btnAlugar.setEnabled(false);
 					} else {
 						btnAlugar.setEnabled(true);
