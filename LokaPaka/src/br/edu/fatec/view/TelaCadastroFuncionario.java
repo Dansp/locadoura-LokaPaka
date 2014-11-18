@@ -186,6 +186,8 @@ public class TelaCadastroFuncionario extends JFrame {
 		contentPane.add(btnVoltar);
 		
 		comboBox = new JComboBox();
+		comboBox.setEnabled(false);
+		comboBox.setVisible(false);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Funcion\u00E1rio", "Gerente"}));
 		comboBox.setBounds(21, 214, 96, 20);
 		contentPane.add(comboBox);
