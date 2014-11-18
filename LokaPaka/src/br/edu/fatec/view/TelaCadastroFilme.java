@@ -164,7 +164,7 @@ public class TelaCadastroFilme extends JFrame {
 				new LimpaCampos(TelaCadastroFilme.this);
 			}
 		});
-		btnAlterar.setBounds(313, 52, 89, 34);
+		btnAlterar.setBounds(307, 52, 95, 34);
 		contentPane.add(btnAlterar);
 		
 	}

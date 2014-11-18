@@ -70,6 +70,7 @@ public class MainLayout extends JFrame {
 		
 		if(tipo.getTipo() == Gerente.COD_GERENTE){
 			mnGerarRelatrio.setEnabled(true);
+			mnGerarRelatrio.setVisible(true);
 		}
 		funcionario = tipo;
 	}
@@ -95,6 +96,7 @@ public class MainLayout extends JFrame {
 		menuBar.add(mnCadastro);
 		
 		JMenu mnCliente = new JMenu("Cliente");
+		mnCliente.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/user_add.png")));
 		mnCadastro.add(mnCliente);
 		
 		JMenuItem mntmMaiorDe = new JMenuItem("Maior de 18");
@@ -126,6 +128,7 @@ public class MainLayout extends JFrame {
 		mnCliente.add(mntmMenorDe);
 		
 		JMenuItem mntmFilme = new JMenuItem("Filme");
+		mntmFilme.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/film_add.png")));
 		mntmFilme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new TelaCadastroFilme().setVisible(true);
@@ -136,6 +139,7 @@ public class MainLayout extends JFrame {
 		mnCadastro.add(mntmFilme);
 		
 		JMenu mnNewMenu = new JMenu("Consultas");
+		mnNewMenu.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/zoom.png")));
 		mnNewMenu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -146,6 +150,7 @@ public class MainLayout extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenu mnNewMenu_2 = new JMenu("Reserva");
+		mnNewMenu_2.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/hourglass_add.png")));
 		mnNewMenu_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -160,6 +165,7 @@ public class MainLayout extends JFrame {
 		menuBar.add(mnNewMenu_2);
 		
 		mnMenuLocacao = new JMenu("Loca\u00E7\u00E3o");
+		mnMenuLocacao.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/database_add.png")));
 		mnMenuLocacao.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -176,6 +182,7 @@ public class MainLayout extends JFrame {
 		menuBar.add(mnMenuLocacao);
 		
 		JMenu mnNewMenu_4 = new JMenu("logoff");
+		mnNewMenu_4.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/door_out.png")));
 	
 		mnNewMenu_4.addMouseListener(new MouseAdapter() {
 			@Override
@@ -186,7 +193,9 @@ public class MainLayout extends JFrame {
 		});
 		
 		mnGerarRelatrio = new JMenu("Gerar Relat\u00F3rio");
+		mnGerarRelatrio.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/page_white_text.png")));
 		mnGerarRelatrio.setEnabled(false);
+		mnGerarRelatrio.setVisible(false);
 		menuBar.add(mnGerarRelatrio);
 		menuBar.add(mnNewMenu_4);
 		contentPane = new JPanel();

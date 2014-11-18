@@ -146,8 +146,10 @@ public class TelaLogin extends JFrame {
 		
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null, "Tem certeza que deseja sair?");
-				dispose();
+				int res =JOptionPane.showConfirmDialog(null, "Tem certeza que deseja sair?");
+				if(res == JOptionPane.YES_OPTION){
+					dispose();
+				}
 			}
 		});
 		btnSair.setBounds(10, 117, 89, 23);

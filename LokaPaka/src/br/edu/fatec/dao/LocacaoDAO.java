@@ -70,7 +70,7 @@ public class LocacaoDAO {
 		
 	}
 	
-	public boolean consultar(Locacao locacao) throws Exception{
+	public boolean alugado(Locacao locacao) throws Exception{
 		PreparedStatement ps = null;
 		Connection conn = null;
 		ResultSet rs = null;
@@ -93,7 +93,8 @@ public class LocacaoDAO {
 			
 		}
 		
-		if(locacao.getCodFilme().equals(locacao2.getCodFilme())){
+		if(locacao.getCodFilme().equals(locacao2.getCodFilme())
+				&& (locacao.getNumCarterinha().equals(locacao2.getNumCarterinha()))){
 			return true;
 		} 
 		

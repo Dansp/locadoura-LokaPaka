@@ -2,7 +2,7 @@ package br.edu.fatec.view;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -25,10 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import br.edu.fatec.bean.Cliente;
 import br.edu.fatec.bean.Filme;
@@ -37,16 +34,6 @@ import br.edu.fatec.dao.FilmeDAO;
 import br.edu.fatec.util.ConsultaTableModelCliente;
 import br.edu.fatec.util.ConsultaTableModelFilme;
 import br.edu.fatec.util.SetaTamanhoTela;
-
-import javax.swing.ScrollPaneConstants;
-
-import org.omg.CORBA.Object;
-
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.Font;
 
 public class TelaConsulta extends JFrame {
 
@@ -135,6 +122,7 @@ public class TelaConsulta extends JFrame {
 		panelTable.setBounds(10, 95, 1340, 573);
 
 		JButton btnPequisar = new JButton("Pesquisar");
+		btnPequisar.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/zoom.png")));
 		btnPequisar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -185,10 +173,12 @@ public class TelaConsulta extends JFrame {
 					comboBox.setModel(new DefaultComboBoxModel(new String[] {"Selecione", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PR", "PA", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SE", "SP", "TO"}));
 					textFieldPesquisa.setText("Código Nome ou CPF");
 					btnCadastrar.setText("Cadastrar Cliente");
+					btnCadastrar.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/user_add.png")));
 				} else {
 					comboBox.setModel(new DefaultComboBoxModel(new String[] {"Selecione", "A\u00E7\u00E3o", "Anima\u00E7\u00E3o", "Aventura", "Com\u00E9dia", "Com\u00E9dia rom\u00E2ntica", "Com\u00E9dia dram\u00E1tica", "Com\u00E9dia de a\u00E7\u00E3o", "Dan\u00E7a", "Document\u00E1rios ", "Drama", "Espionagem", "Fantasia", "Faroeste ", "Fic\u00E7\u00E3o cient\u00EDfica", "Franchise/S\u00E9ries", "Guerra", "Musical", "Filme noir", "Policial", "Pornogr\u00E1fico", "Romance", "Suspense", "Terror "}));
 					textFieldPesquisa.setText("Código ou Título");
 					btnCadastrar.setText("Cadastrar Filme");
+					btnCadastrar.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/film_add.png")));
 				}
 			}
 		});
@@ -254,6 +244,7 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(lblFiltro);
 		
 		btnCadastrar = new JButton("Cadastrar Cliente");
+		btnCadastrar.setIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/user_add.png")));
 		btnCadastrar.setSelectedIcon(new ImageIcon(TelaConsulta.class.getResource("/br/edu/fatec/icons/add.png")));
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
