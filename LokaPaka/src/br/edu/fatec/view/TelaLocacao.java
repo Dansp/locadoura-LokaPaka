@@ -49,6 +49,8 @@ public class TelaLocacao extends TelaConsulta {
 	private Filme filme;
 	private Cliente cliente;
 	private JLabel lblDataAtual;
+	private JTextField textField;
+	private JTextField textFieldDevRealizada;
 
 	/**
 	 * Launch the application.
@@ -83,10 +85,10 @@ public class TelaLocacao extends TelaConsulta {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblAlugarFilme = new JLabel("ALUGAR FILME");
+		JLabel lblAlugarFilme = new JLabel("ALUGAR OU DEVOLVER FILME");
 		lblAlugarFilme.setForeground(Color.WHITE);
 		lblAlugarFilme.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblAlugarFilme.setBounds(568, 23, 209, 20);
+		lblAlugarFilme.setBounds(568, 23, 335, 20);
 		contentPane.add(lblAlugarFilme);
 
 		JPanel panel = new JPanel();
@@ -316,7 +318,7 @@ public class TelaLocacao extends TelaConsulta {
 		label_17.setBounds(133, 360, 130, 14);
 		contentPane.add(label_17);
 
-		btnAlugar = new JButton("Confirmar");
+		btnAlugar = new JButton("Alugar");
 		btnAlugar.setEnabled(false);
 		btnAlugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -327,8 +329,40 @@ public class TelaLocacao extends TelaConsulta {
 				locacao.setNumCarterinha(txtCarterinha.getText());
 				locacao.setDataLocacao(lblDataAtual.getText());
 				locacao.setDataDevolucao(lblDataDevolucao.getText());
-
+				
+				boolean dadosOk = verificaDisponibilidade(locacao);
+				
+				if(dadosOk){
 				LocacaoDAO dao2;
+				try {
+					dao2 = new LocacaoDAO();
+					dao2.locar(locacao);
+					
+					JOptionPane.showMessageDialog(null,
+							"Locação efetuada com sucesso!");
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null,
+							"Não é possível fazer a locação");
+				}
+				
+				} else {
+					
+						int resposta = JOptionPane.showConfirmDialog(null, "Filme indisponível, Deseja reservar o filme?");
+						btnAlugar.setEnabled(false);
+						if(resposta == JOptionPane.YES_OPTION){
+							dispose();
+							try {
+								new TelaReserva().setVisible(true);
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					
+				}
+				
+				
+				/*
 				try {
 					dao2 = new LocacaoDAO();
 					if (!dao2.alugado(locacao)) {
@@ -357,17 +391,18 @@ public class TelaLocacao extends TelaConsulta {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				*/
 
 			}
 		});
 		btnAlugar.setIcon(new ImageIcon(TelaLocacao.class
 				.getResource("/br/edu/fatec/icons/accept.png")));
-		btnAlugar.setBounds(1172, 663, 141, 51);
+		btnAlugar.setBounds(1148, 612, 141, 51);
 		contentPane.add(btnAlugar);
 
 		JLabel lblDataDeDevoluo = new JLabel("Data de Devolu\u00E7\u00E3o:");
 		lblDataDeDevoluo.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblDataDeDevoluo.setBounds(722, 586, 159, 14);
+		lblDataDeDevoluo.setBounds(759, 586, 159, 14);
 		contentPane.add(lblDataDeDevoluo);
 
 		JPanel panel_2 = new JPanel();
@@ -387,17 +422,17 @@ public class TelaLocacao extends TelaConsulta {
 		String d2 = form.format(date);
 		lblDataDevolucao = new JLabel(d2);
 		lblDataDevolucao.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDataDevolucao.setBounds(891, 588, 159, 14);
+		lblDataDevolucao.setBounds(945, 586, 159, 14);
 		contentPane.add(lblDataDevolucao);
 
 		lblDataAtual = new JLabel(d);
 		lblDataAtual.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDataAtual.setBounds(891, 546, 85, 14);
+		lblDataAtual.setBounds(945, 546, 85, 14);
 		contentPane.add(lblDataAtual);
 
 		JLabel lblDataAtual_1 = new JLabel("Data Atual:");
 		lblDataAtual_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblDataAtual_1.setBounds(722, 546, 159, 14);
+		lblDataAtual_1.setBounds(759, 546, 159, 14);
 		contentPane.add(lblDataAtual_1);
 
 		JPanel panel_1 = new JPanel();
@@ -412,7 +447,79 @@ public class TelaLocacao extends TelaConsulta {
 			}
 		});
 		button.setIcon(new ImageIcon(TelaLocacao.class.getResource("/br/edu/fatec/icons/arrow_left.png")));
-		button.setBounds(80, 691, 89, 23);
+		button.setBounds(20, 723, 89, 23);
 		contentPane.add(button);
+		
+		JLabel lblFilmeDevolvidoEm = new JLabel("Filme Devolvido em:");
+		lblFilmeDevolvidoEm.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblFilmeDevolvidoEm.setBounds(128, 564, 225, 14);
+		contentPane.add(lblFilmeDevolvidoEm);
+		
+		textField = new JTextField();
+		textFieldDevRealizada = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		textFieldDevRealizada.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		textFieldDevRealizada.setBounds(363, 561, 134, 20);
+		contentPane.add(textFieldDevRealizada);
+		textFieldDevRealizada.setColumns(10);
+		
+		JButton btnDevolver = new JButton("Devolver");
+		btnDevolver.setIcon(new ImageIcon(TelaLocacao.class.getResource("/br/edu/fatec/icons/arrow_down.png")));
+		btnDevolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Locacao locacao = new Locacao();
+				locacao.setCodFilme(txtCodFilme.getText());
+				locacao.setCodFuncionario(funcionario.getCodFunc());
+				locacao.setNumCarterinha(txtCarterinha.getText());
+				locacao.setDataLocacao(lblDataAtual.getText());
+				locacao.setDataDevolucao(lblDataDevolucao.getText());
+				locacao.setDataDevRealizada(textFieldDevRealizada.getText());
+				LocacaoDAO dao4;
+				
+				
+				try {
+					dao4 = new LocacaoDAO();
+					dao4.devolver(locacao);
+					
+					JOptionPane.showMessageDialog(null,
+							"Filme devolvido com sucesso!");
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,
+							"Não foi possível fazer a devolução!");
+				}
+				
+			}
+		});
+		btnDevolver.setBounds(533, 612, 130, 51);
+		contentPane.add(btnDevolver);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(BorderFactory.createTitledBorder("Devolver"));
+		panel_3.setBounds(80, 499, 597, 210);
+		contentPane.add(panel_3);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(BorderFactory.createTitledBorder("Alugar"));
+		panel_4.setBounds(722, 499, 597, 210);
+		contentPane.add(panel_4);
+	}
+	
+	public boolean verificaDisponibilidade(Locacao locacao){
+		
+		try {
+			LocacaoDAO dao3 = new LocacaoDAO();
+			boolean dadosOk = dao3.alugado(locacao);
+			if(dadosOk){
+				return true;
+			}else {
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

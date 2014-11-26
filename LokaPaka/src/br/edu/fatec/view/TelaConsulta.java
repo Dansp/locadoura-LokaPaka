@@ -110,7 +110,7 @@ public class TelaConsulta extends JFrame {
 			}
 		});
 		textFieldPesquisa.setForeground(Color.LIGHT_GRAY);
-		textFieldPesquisa.setText("C\u00F3digo Nome ou CPF");
+		textFieldPesquisa.setText("C\u00F3digo ou Nome ou CPF");
 		textFieldPesquisa.setToolTipText("");
 		textFieldPesquisa.setBounds(104, 23, 623, 20);
 		contentPane.add(textFieldPesquisa);

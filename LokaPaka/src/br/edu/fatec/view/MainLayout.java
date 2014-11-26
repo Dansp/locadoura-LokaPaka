@@ -95,12 +95,9 @@ public class MainLayout extends JFrame {
 		mnCadastro.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/add.png")));
 		menuBar.add(mnCadastro);
 		
-		JMenu mnCliente = new JMenu("Cliente");
-		mnCliente.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/user_add.png")));
-		mnCadastro.add(mnCliente);
-		
-		JMenuItem mntmMaiorDe = new JMenuItem("Maior de 18");
-		mntmMaiorDe.addActionListener(new ActionListener() {
+		JMenuItem menuItem = new JMenuItem("Cliente");
+		menuItem.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/user_add.png")));
+		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					new TelaCadastroCliente().setVisible(true);
@@ -108,24 +105,9 @@ public class MainLayout extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				//dispose();
 			}
 		});
-		mnCliente.add(mntmMaiorDe);
-		
-		JMenuItem mntmMenorDe = new JMenuItem("Menor de 18");
-		mntmMenorDe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					new TelaCadastroCliente().setVisible(true);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				//dispose();
-			}
-		});
-		mnCliente.add(mntmMenorDe);
+		mnCadastro.add(menuItem);
 		
 		JMenuItem mntmFilme = new JMenuItem("Filme");
 		mntmFilme.setIcon(new ImageIcon(MainLayout.class.getResource("/br/edu/fatec/icons/film_add.png")));

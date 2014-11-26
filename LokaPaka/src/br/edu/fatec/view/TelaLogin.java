@@ -71,12 +71,12 @@ public class TelaLogin extends JFrame {
 		
 		txtLogin = new JTextField();
 		txtLogin.setToolTipText("Insira o seu email ou usu\u00E1rio");
-		txtLogin.setBounds(118, 44, 123, 20);
+		txtLogin.setBounds(118, 44, 225, 20);
 		contentPane.add(txtLogin);
 		txtLogin.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(118, 72, 123, 20);
+		passwordField.setBounds(118, 72, 225, 20);
 		contentPane.add(passwordField);
 		
 		JPanel panel = new JPanel();
@@ -138,7 +138,7 @@ public class TelaLogin extends JFrame {
 
 			
 		});
-		btnEntrar.setBounds(148, 117, 89, 23);
+		btnEntrar.setBounds(212, 117, 131, 23);
 		contentPane.add(btnEntrar);
 		
 		JButton btnSair = new JButton("Sair");
@@ -154,40 +154,6 @@ public class TelaLogin extends JFrame {
 		});
 		btnSair.setBounds(10, 117, 89, 23);
 		contentPane.add(btnSair);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.LIGHT_GRAY);
-		panel_1.setBounds(247, 37, 123, 55);
-		contentPane.add(panel_1);
-		
-		JLabel lblNovoAqui = new JLabel("Novo aqui?");
-		panel_1.add(lblNovoAqui);
-		
-		final JPanel panel_criarLogin = new JPanel();
-		panel_criarLogin.setBorder(UIManager.getBorder("CheckBox.border"));
-		
-		panel_criarLogin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				new TelaCadastroFuncionario().setVisible(true);
-				dispose();
-			}
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				panel_criarLogin.setBackground(Color.green);
-			}
-		});
-		panel_criarLogin.setBackground(Color.RED);
-		panel_criarLogin.setBounds(247, 92, 123, 59);
-		contentPane.add(panel_criarLogin);
-		panel_criarLogin.setLayout(null);
-		
-		JLabel lblCriarLogin = new JLabel("Criar Login");
-		lblCriarLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCriarLogin.setBounds(0, 23, 123, 14);
-		lblCriarLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCriarLogin.setForeground(Color.WHITE);
-		panel_criarLogin.add(lblCriarLogin);
 	}
 
 	

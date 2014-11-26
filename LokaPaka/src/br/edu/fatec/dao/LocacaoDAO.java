@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import br.edu.fatec.bean.Cliente;
-import br.edu.fatec.bean.Filme;
 import br.edu.fatec.bean.Locacao;
 import br.edu.fatec.util.ConnectionFactory;
 
@@ -33,8 +31,7 @@ public class LocacaoDAO {
 			throw new Exception("O valor passado nao pode ser nulo");
 		
 		try {
-			String SQL = "INSERT INTO locacao (idfilme, idFunc, numCarterinha, dataLocacao, "
-					+ "dataDevolucao, dataDevRealizada) values(?, ?, ?, ?, ?, ?)"; 
+			String SQL = "INSERT INTO locacao (idfilme, idFunc, numCarterinha, dataLocacao, dataDevolucao, dataDevRealizada) values(?, ?, ?, ?, ?, ?)"; 
 			conn = this.comn;
 			ps = conn.prepareStatement(SQL);
 			
@@ -66,14 +63,11 @@ public class LocacaoDAO {
 	}
 	
 	
-	public void devolver(){
-		
-	}
-	
 	public boolean alugado(Locacao locacao) throws Exception{
 		PreparedStatement ps = null;
 		Connection conn = null;
 		ResultSet rs = null;
+		boolean dadosOk = false;
 		if(locacao == null)
 			throw new Exception("O valor passado nao pode ser nulo");
 		
@@ -81,22 +75,32 @@ public class LocacaoDAO {
 		try{
 		conn = this.comn;
 		
-		String SQL = "SELECT * FROM locacao";
+		String SQL = "SELECT * FROM locacao where idfilme = ? and numCarterinha = ?";
 		ps = conn.prepareStatement(SQL);
-		
+		ps.setString(1, locacao.getCodFilme());
+		ps.setString(2, locacao.getNumCarterinha());
+	
 		rs = ps.executeQuery();
 		
 		while(rs.next()){
 			locacao2 = new Locacao(); 
 			locacao2.setCodFilme(rs.getString("idfilme"));
 			locacao2.setNumCarterinha(rs.getString("numCarterinha"));
+			locacao2.setDataDevRealizada(rs.getString("dataDevRealizada"));
 			
 		}
 		
-		if(locacao.getCodFilme().equals(locacao2.getCodFilme())
-				&& (locacao.getNumCarterinha().equals(locacao2.getNumCarterinha()))){
-			return true;
+		if(!locacao.getCodFilme().equals(locacao2.getCodFilme())
+				&& (!locacao.getNumCarterinha().equals(locacao2.getNumCarterinha()))){
+			
+			dadosOk = true;
 		} 
+		
+		if(!locacao2.getDataDevRealizada().equals(null)){
+			dadosOk = true;
+		} else {
+			dadosOk = false;
+		}
 		
 			
 		} catch(SQLException sqle){
@@ -105,7 +109,32 @@ public class LocacaoDAO {
 		} finally {
 			ConnectionFactory.closeConnection(conn, ps);
 		}
+		return dadosOk;
+	}
+	
+	
+	public void devolver(Locacao locacao) throws Exception {
+		PreparedStatement ps = null;
+		Connection conn = null;
+
+		if (locacao == null)
+			throw new Exception("O valor passado não pode ser nulo");
+
+		try {
+			String SQL = "UPDATE locacao SET dataDevRealizada = ? WHERE idFilme = ? and numCarterinha = ?";
+			conn = this.comn;
+			ps = conn.prepareStatement(SQL);
 		
-		return false;
+			ps.setString(1, locacao.getDataDevRealizada());
+			ps.setInt(2, Integer.parseInt(locacao.getCodFilme()));
+			ps.setInt(3, Integer.parseInt(locacao.getNumCarterinha()));
+			
+
+			ps.executeUpdate();
+		} catch (SQLException sqle) {
+			throw new Exception("Erro ao alterar dados " + sqle);
+		} finally {
+			ConnectionFactory.closeConnection(conn, ps);
+		}
 	}
 }
