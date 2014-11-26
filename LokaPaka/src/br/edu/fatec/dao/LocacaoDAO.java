@@ -63,7 +63,7 @@ public class LocacaoDAO {
 	}
 	
 	
-	public boolean alugado(Locacao locacao) throws Exception{
+	public boolean alugar(Locacao locacao) throws Exception{
 		PreparedStatement ps = null;
 		Connection conn = null;
 		ResultSet rs = null;

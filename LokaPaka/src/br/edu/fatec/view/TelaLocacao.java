@@ -510,7 +510,7 @@ public class TelaLocacao extends TelaConsulta {
 		
 		try {
 			LocacaoDAO dao3 = new LocacaoDAO();
-			boolean dadosOk = dao3.alugado(locacao);
+			boolean dadosOk = dao3.alugar(locacao);
 			if(dadosOk){
 				return true;
 			}else {
