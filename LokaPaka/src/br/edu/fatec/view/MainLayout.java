@@ -207,7 +207,7 @@ public class MainLayout extends JFrame {
 		
 		
 		text_clock.setFont(new Font("Times New Roman", Font.BOLD, 54));
-		text_clock.setBounds(1094, 521, 233, 77);
+		text_clock.setBounds(1158, 520, 198, 77);
 		contentPane.add(text_clock);
 		
 
@@ -231,7 +231,7 @@ public class MainLayout extends JFrame {
 	                if( currentSecond == 60 ) {
 	                    reset();
 	                }
-	                text_clock.setText( String.format("%s:%02d", sdf.format(calendar.getTime()), currentSecond ));
+	                text_clock.setText( String.format("%s", sdf.format(calendar.getTime())));
 	                currentSecond++;
 	            }
 	        }, 0, 1000 );
